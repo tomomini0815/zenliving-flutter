@@ -39,6 +39,7 @@ class NotificationScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: AppTheme.surface,
         elevation: 0,
+        titleSpacing: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: AppTheme.onSurface),
           onPressed: () => Navigator.pop(context),

@@ -31,6 +31,7 @@ class RePropertyDetailScreen extends StatelessWidget {
             expandedHeight: 280,
             pinned: true,
             backgroundColor: AppTheme.surface,
+            titleSpacing: 0,
             leading: GestureDetector(
               onTap: () => Navigator.pop(context),
               child: Container(

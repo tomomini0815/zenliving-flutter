@@ -17,6 +17,7 @@ class MpReservationsScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: AppTheme.surface,
         elevation: 0,
+        titleSpacing: 0,
         title: Text('予約済み',
             style: GoogleFonts.notoSansJp(fontWeight: FontWeight.bold, fontSize: 18)),
         actions: [

@@ -26,6 +26,7 @@ class _ReReservationConfirmScreenState
       appBar: AppBar(
         backgroundColor: AppTheme.surface,
         elevation: 0,
+        titleSpacing: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),

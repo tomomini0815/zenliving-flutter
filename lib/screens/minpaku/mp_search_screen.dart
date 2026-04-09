@@ -47,6 +47,7 @@ class _MpSearchScreenState extends State<MpSearchScreen> {
       appBar: AppBar(
         backgroundColor: AppTheme.surface,
         elevation: 0,
+        titleSpacing: 0,
         title: Text('宿泊先を探す',
             style: GoogleFonts.notoSansJp(fontWeight: FontWeight.bold)),
         actions: [

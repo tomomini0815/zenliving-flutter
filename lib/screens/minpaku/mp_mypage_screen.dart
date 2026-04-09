@@ -15,6 +15,7 @@ class MpMypageScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: AppTheme.surface,
         elevation: 0,
+        titleSpacing: 0,
         leading: IconButton(
           icon: const Icon(Icons.menu, color: Color(0xFF2E7D32)),
           onPressed: () {},

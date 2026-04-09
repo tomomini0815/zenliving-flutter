@@ -38,6 +38,7 @@ class _ReSearchScreenState extends State<ReSearchScreen> {
       appBar: AppBar(
         backgroundColor: AppTheme.surface,
         elevation: 0,
+        titleSpacing: 0,
         title: Text('物件を探す',
             style: GoogleFonts.notoSansJp(fontWeight: FontWeight.bold, fontSize: 18)),
         actions: [

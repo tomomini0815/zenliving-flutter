@@ -15,6 +15,7 @@ class ReMypageScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: AppTheme.surface,
         elevation: 0,
+        titleSpacing: 0,
         title: Row(children: [
           const Icon(Icons.home_work, color: Color(0xFF1B5E20), size: 20),
           const SizedBox(width: 8),

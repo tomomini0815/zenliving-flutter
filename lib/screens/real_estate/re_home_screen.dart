@@ -22,14 +22,19 @@ class ReHomeScreen extends StatelessWidget {
             elevation: 0,
             scrolledUnderElevation: 0.5,
             shadowColor: Colors.black.withOpacity(0.05),
-            title: Text(
-              'ZenLiving',
-              style: GoogleFonts.playfairDisplay(
-                fontSize: 22,
-                fontWeight: FontWeight.w600,
-                letterSpacing: -0.5,
-                color: const Color(0xFF1B5E20),
-              ),
+            title: Row(
+              children: [
+                const Icon(Icons.home_work, color: Color(0xFF1B5E20), size: 22),
+                const SizedBox(width: 8),
+                Text(
+                  'ZenLiving',
+                  style: GoogleFonts.plusJakartaSans(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: const Color(0xFF1B5E20),
+                  ),
+                ),
+              ],
             ),
             actions: [
               IconButton(

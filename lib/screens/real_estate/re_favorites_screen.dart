@@ -16,6 +16,7 @@ class ReFavoritesScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: AppTheme.surface,
         elevation: 0,
+        titleSpacing: 0,
         title: Text('保存済み物件',
             style: GoogleFonts.notoSansJp(fontWeight: FontWeight.bold, fontSize: 18)),
       ),

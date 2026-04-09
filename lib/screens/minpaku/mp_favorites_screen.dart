@@ -16,6 +16,7 @@ class MpFavoritesScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: AppTheme.surface,
         elevation: 0,
+        titleSpacing: 0,
         title: Text('お気に入り',
             style: GoogleFonts.notoSansJp(fontWeight: FontWeight.bold, fontSize: 18)),
       ),

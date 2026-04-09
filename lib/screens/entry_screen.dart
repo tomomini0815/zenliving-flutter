@@ -23,7 +23,23 @@ class EntryScreen extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.only(top: 8, right: 8),
                   child: PopupMenuButton<String>(
-                    icon: const Icon(Icons.language, color: AppTheme.onSurfaceVariant),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                      decoration: BoxDecoration(
+                        color: AppTheme.surfaceContainerLow,
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(color: AppTheme.outlineVariant.withOpacity(0.5)),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Icon(Icons.language, size: 16, color: AppTheme.primary),
+                          const SizedBox(width: 8),
+                          Text('JA', style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold, color: AppTheme.onSurface)),
+                          const Icon(Icons.arrow_drop_down, size: 20, color: AppTheme.onSurface),
+                        ],
+                      ),
+                    ),
                     onSelected: (String value) {
                       // Logic for language change if needed later
                     },
