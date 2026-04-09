@@ -20,11 +20,15 @@ class MpMypageScreen extends StatelessWidget {
           icon: const Icon(Icons.menu, color: Color(0xFF2E7D32)),
           onPressed: () {},
         ),
-        title: Text('ZenLiving',
-            style: GoogleFonts.plusJakartaSans(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: const Color(0xFF0D631B))),
+        title: Row(children: [
+          const Icon(Icons.home_work, color: Color(0xFF1B5E20), size: 20),
+          const SizedBox(width: 8),
+          Text('ZenLiving',
+              style: GoogleFonts.plusJakartaSans(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: const Color(0xFF1B5E20))),
+        ]),
         actions: [
           IconButton(
             icon: const Icon(Icons.notifications_outlined,

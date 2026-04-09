@@ -22,14 +22,7 @@ class MpHomeScreen extends StatelessWidget {
             elevation: 0,
             scrolledUnderElevation: 0.5,
             title: Row(children: [
-              IconButton(
-                icon: const Icon(Icons.menu, color: Color(0xFF2E7D32)),
-                onPressed: () {},
-                padding: EdgeInsets.zero,
-                constraints: const BoxConstraints(),
-              ),
-              const SizedBox(width: 12),
-              const Icon(Icons.holiday_village, color: Color(0xFF2E7D32), size: 22),
+              const Icon(Icons.home_work, color: Color(0xFF1B5E20), size: 22),
               const SizedBox(width: 8),
               Text(
                 'ZenLiving',
