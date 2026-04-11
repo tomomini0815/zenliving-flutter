@@ -1,10 +1,11 @@
 #!/bin/bash
 set -e
 
-# Flutter SDK のクローン (特定のバージョンに固定して予期せぬエラーを防ぐ)
-if [ ! -d "flutter" ]; then
-  git clone --depth 1 --branch 3.29.0 https://github.com/flutter/flutter.git
-fi
+# クリーンアップ: 壊れたキャッシュを避けるために毎回クリーンインストール
+rm -rf flutter
+
+# Flutter SDK のクローン
+git clone https://github.com/flutter/flutter.git -b stable
 
 # パスを通す
 export PATH="$PATH:`pwd`/flutter/bin"
