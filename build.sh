@@ -13,13 +13,15 @@ export PATH="$PATH:`pwd`/flutter/bin"
 echo "Current Flutter Version:"
 flutter --version
 
-# Flutter の設定と診断
+# Flutter の設定
 flutter config --enable-web
-flutter doctor -v
+
+# プロジェクトのクリーンアップ（Vercelキャッシュとの競合防止）
+flutter clean
 
 # 依存関係の取得とコード生成
 flutter pub get
 flutter gen-l10n
 
-# ビルド実行 (詳細ログを出力して原因を特定)
-flutter build web --release -v
+# ビルド実行
+flutter build web --release
