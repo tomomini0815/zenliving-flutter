@@ -10,4 +10,6 @@ export PATH="$PATH:`pwd`/flutter/bin"
 
 # Flutter の設定とビルド
 flutter config --enable-web
+flutter pub get
+flutter gen-l10n
 flutter build web --release
