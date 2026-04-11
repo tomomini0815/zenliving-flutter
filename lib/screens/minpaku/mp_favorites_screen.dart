@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../theme/app_theme.dart';
 import '../../state/zen_state.dart';
 import '../../data/sample_data.dart';
@@ -14,17 +16,21 @@ class MpFavoritesScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppTheme.surface,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+        centerTitle: true,
         backgroundColor: AppTheme.surface,
         elevation: 0,
         titleSpacing: 0,
         title: Text('お気に入り',
-            style: GoogleFonts.notoSansJp(fontWeight: FontWeight.bold, fontSize: 18)),
+            style: GoogleFonts.notoSansJp(
+                fontWeight: FontWeight.bold, fontSize: 18)),
       ),
-      body: Consumer<ZenState>(builder: (_, state, __) {
-        final favs = mpProperties.where((p) => state.isFavorite(p.id)).toList();
+      body: Consumer<ZenState>(builder: (context, state, __) {
+        final favs = getMpProperties(AppLocalizations.of(context)!).where((p) => state.isFavorite(p.id)).toList();
         if (favs.isEmpty) {
           return Center(
-            child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+            child:
+                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
               const Icon(Icons.favorite_outline,
                   size: 64, color: AppTheme.outlineVariant),
               const SizedBox(height: 16),
@@ -47,7 +53,8 @@ class MpFavoritesScreen extends StatelessWidget {
           itemBuilder: (_, i) {
             final p = favs[i];
             return GestureDetector(
-              onTap: () => Navigator.push(context,
+              onTap: () => Navigator.push(
+                  context,
                   MaterialPageRoute(
                       builder: (_) => MpPropertyDetailScreen(property: p))),
               child: _FavCard(
@@ -73,7 +80,9 @@ class _FavCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppTheme.surfaceContainerLowest,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 8)],
+        boxShadow: [
+          BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 8)
+        ],
       ),
       clipBehavior: Clip.antiAlias,
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -81,8 +90,10 @@ class _FavCard extends StatelessWidget {
           height: 160,
           width: double.infinity,
           child: Stack(fit: StackFit.expand, children: [
-            Image.network(property.image, fit: BoxFit.cover,
-                errorBuilder: (_, __, ___) =>
+            CachedNetworkImage(
+                imageUrl: property.image,
+                fit: BoxFit.cover,
+                errorWidget: (_, __, ___) =>
                     Container(color: AppTheme.surfaceContainerHigh)),
             Positioned(
               top: 12,
@@ -94,7 +105,8 @@ class _FavCard extends StatelessWidget {
                   decoration: BoxDecoration(
                       color: Colors.white.withOpacity(0.9),
                       shape: BoxShape.circle),
-                  child: const Icon(Icons.favorite, color: AppTheme.error, size: 18),
+                  child: const Icon(Icons.favorite,
+                      color: AppTheme.error, size: 18),
                 ),
               ),
             ),
@@ -102,7 +114,8 @@ class _FavCard extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.all(14),
-          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -113,7 +126,8 @@ class _FavCard extends StatelessWidget {
                         color: AppTheme.outline,
                         letterSpacing: 1)),
                 Row(children: [
-                  const Icon(Icons.star_rounded, size: 12, color: AppTheme.secondary),
+                  const Icon(Icons.star_rounded,
+                      size: 12, color: AppTheme.secondary),
                   const SizedBox(width: 2),
                   Text(property.rating.toStringAsFixed(2),
                       style: GoogleFonts.plusJakartaSans(

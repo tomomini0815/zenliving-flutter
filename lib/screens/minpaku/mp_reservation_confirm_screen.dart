@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../../theme/app_theme.dart';
@@ -61,8 +62,9 @@ class _MpReservationConfirmScreenState
                     child: SizedBox(
                       width: 90,
                       height: 90,
-                      child: Image.network(
-                          p?.image ?? Imgs.mpDetail, fit: BoxFit.cover),
+                      child: CachedNetworkImage(
+                          imageUrl: p?.image ?? Imgs.mpDetail,
+                          fit: BoxFit.cover),
                     ),
                   ),
                   const SizedBox(width: 14),
@@ -321,7 +323,8 @@ class _FormField extends StatelessWidget {
             borderRadius: BorderRadius.circular(12),
             borderSide: BorderSide.none,
           ),
-          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         ),
       ),
     ]);
@@ -367,7 +370,8 @@ class _PaymentOption extends StatelessWidget {
               color: isSelected ? AppTheme.primary : AppTheme.onSurfaceVariant),
           const SizedBox(width: 14),
           Expanded(
-            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text(title,
                   style: GoogleFonts.notoSansJp(
                       fontSize: 14, fontWeight: FontWeight.bold)),
@@ -377,9 +381,11 @@ class _PaymentOption extends StatelessWidget {
             ]),
           ),
           Icon(
-              isSelected ? Icons.radio_button_checked : Icons.radio_button_unchecked,
-              color: isSelected ? AppTheme.primary : AppTheme.onSurfaceVariant,
-            ),
+            isSelected
+                ? Icons.radio_button_checked
+                : Icons.radio_button_unchecked,
+            color: isSelected ? AppTheme.primary : AppTheme.onSurfaceVariant,
+          ),
         ]),
       ),
     );

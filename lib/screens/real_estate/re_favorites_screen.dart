@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../theme/app_theme.dart';
 import '../../state/zen_state.dart';
 import '../../data/sample_data.dart';
@@ -14,14 +16,17 @@ class ReFavoritesScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppTheme.surface,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+        centerTitle: true,
         backgroundColor: AppTheme.surface,
         elevation: 0,
         titleSpacing: 0,
         title: Text('保存済み物件',
-            style: GoogleFonts.notoSansJp(fontWeight: FontWeight.bold, fontSize: 18)),
+            style: GoogleFonts.notoSansJp(
+                fontWeight: FontWeight.bold, fontSize: 18)),
       ),
-      body: Consumer<ZenState>(builder: (_, state, __) {
-        final favs = reProperties.where((p) => state.isFavorite(p.id)).toList();
+      body: Consumer<ZenState>(builder: (context, state, __) {
+        final favs = getReProperties(AppLocalizations.of(context)!).where((p) => state.isFavorite(p.id)).toList();
         if (favs.isEmpty) {
           return Center(
             child: Column(
@@ -50,10 +55,12 @@ class ReFavoritesScreen extends StatelessWidget {
           itemBuilder: (_, i) {
             final p = favs[i];
             return GestureDetector(
-              onTap: () => Navigator.push(context,
+              onTap: () => Navigator.push(
+                  context,
                   MaterialPageRoute(
                       builder: (_) => RePropertyDetailScreen(property: p))),
-              child: _FavoriteCard(property: p, onRemove: () => state.toggleFavorite(p.id)),
+              child: _FavoriteCard(
+                  property: p, onRemove: () => state.toggleFavorite(p.id)),
             );
           },
         );
@@ -74,15 +81,19 @@ class _FavoriteCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppTheme.surfaceContainerLowest,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 8)],
+        boxShadow: [
+          BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 8)
+        ],
       ),
       clipBehavior: Clip.antiAlias,
       child: Row(
         children: [
           SizedBox(
             width: 110,
-            child: Image.network(property.image, fit: BoxFit.cover,
-                errorBuilder: (_, __, ___) =>
+            child: CachedNetworkImage(
+                imageUrl: property.image,
+                fit: BoxFit.cover,
+                errorWidget: (_, __, ___) =>
                     Container(color: AppTheme.surfaceContainerHigh)),
           ),
           Expanded(
@@ -105,30 +116,34 @@ class _FavoriteCard extends StatelessWidget {
                           color: AppTheme.error, size: 20),
                     ),
                   ]),
-                  Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.baseline,
-                      textBaseline: TextBaseline.alphabetic,
+                  Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(property.price,
-                            style: GoogleFonts.plusJakartaSans(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w900,
-                                color: AppTheme.primary)),
-                        Text('万円',
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.baseline,
+                          textBaseline: TextBaseline.alphabetic,
+                          children: [
+                            Text(property.price,
+                                style: GoogleFonts.plusJakartaSans(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w900,
+                                    color: AppTheme.primary)),
+                            Text('万円',
+                                style: GoogleFonts.notoSansJp(
+                                    fontSize: 10,
+                                    color: AppTheme.primary,
+                                    fontWeight: FontWeight.bold)),
+                          ],
+                        ),
+                        Text(property.layout,
                             style: GoogleFonts.notoSansJp(
-                                fontSize: 10,
-                                color: AppTheme.primary,
-                                fontWeight: FontWeight.bold)),
-                      ],
-                    ),
-                    Text(property.layout,
-                        style: GoogleFonts.notoSansJp(
-                            fontSize: 11, color: AppTheme.onSurfaceVariant)),
-                    Text(property.station,
-                        style: GoogleFonts.notoSansJp(
-                            fontSize: 11, color: AppTheme.onSurfaceVariant)),
-                  ]),
+                                fontSize: 11,
+                                color: AppTheme.onSurfaceVariant)),
+                        Text(property.station,
+                            style: GoogleFonts.notoSansJp(
+                                fontSize: 11,
+                                color: AppTheme.onSurfaceVariant)),
+                      ]),
                 ],
               ),
             ),

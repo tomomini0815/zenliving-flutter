@@ -1,6 +1,9 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../theme/app_theme.dart';
 import '../../state/zen_state.dart';
 import '../../data/sample_data.dart';
@@ -18,10 +21,22 @@ class MpHomeScreen extends StatelessWidget {
         slivers: [
           SliverAppBar(
             pinned: true,
-            backgroundColor: AppTheme.surface,
+            automaticallyImplyLeading: false,
+            centerTitle: true,
+            leading: IconButton(
+              icon: const Icon(Icons.grid_view_rounded, color: AppTheme.primary, size: 24),
+              onPressed: () => Navigator.pop(context),
+            ),
+            backgroundColor: AppTheme.surface.withValues(alpha: 0.85),
+            flexibleSpace: ClipRect(
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
+                child: Container(color: Colors.transparent),
+              ),
+            ),
             elevation: 0,
-            scrolledUnderElevation: 0.5,
-            title: Row(children: [
+            scrolledUnderElevation: 0,
+            title: Row(mainAxisSize: MainAxisSize.min, children: [
               const Icon(Icons.home_work, color: Color(0xFF1B5E20), size: 22),
               const SizedBox(width: 8),
               Text(
@@ -37,7 +52,10 @@ class MpHomeScreen extends StatelessWidget {
               IconButton(
                 icon: const Icon(Icons.notifications_outlined,
                     color: Color(0xFF2E7D32)),
-                onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const NotificationScreen())),
+                onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => const NotificationScreen())),
               ),
             ],
           ),
@@ -46,15 +64,15 @@ class MpHomeScreen extends StatelessWidget {
             sliver: SliverList(
               delegate: SliverChildListDelegate([
                 const SizedBox(height: 8),
-                _buildSearchBar(),
+                _buildSearchBar(context),
                 const SizedBox(height: 12),
-                _buildPropertyTypes(),
+                _buildPropertyTypes(context),
                 const SizedBox(height: 20),
                 _buildFeaturedBento(context),
                 const SizedBox(height: 24),
                 _buildNewArrivals(context),
                 const SizedBox(height: 24),
-                _buildAreaGuide(),
+                _buildAreaGuide(context),
                 const SizedBox(height: 100),
               ]),
             ),
@@ -64,7 +82,7 @@ class MpHomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSearchBar() {
+  Widget _buildSearchBar(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         color: AppTheme.surfaceContainerHighest,
@@ -76,7 +94,7 @@ class MpHomeScreen extends StatelessWidget {
           child: Icon(Icons.search, color: AppTheme.primary),
         ),
         Expanded(
-          child: Text('エリア・キーワードから探す',
+          child: Text(AppLocalizations.of(context)!.searchPlaceholder,
               style: GoogleFonts.notoSansJp(
                   fontSize: 14, color: AppTheme.onSurfaceVariant)),
         ),
@@ -88,22 +106,24 @@ class MpHomeScreen extends StatelessWidget {
           child: Row(children: [
             const Icon(Icons.tune, color: Colors.white, size: 16),
             const SizedBox(width: 4),
-            Text('条件変更',
+            Text(AppLocalizations.of(context)!.changeConditions,
                 style: GoogleFonts.notoSansJp(
-                    fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white)),
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white)),
           ]),
         ),
       ]),
     );
   }
 
-  Widget _buildPropertyTypes() {
-    const types = [
-      (Icons.temple_buddhist, '古民家'),
-      (Icons.beach_access, '海沿い'),
-      (Icons.house, '一軒家'),
-      (Icons.apartment, 'アパート'),
-      (Icons.landscape, '山・森'),
+  Widget _buildPropertyTypes(BuildContext context) {
+    final types = [
+      (Icons.temple_buddhist, AppLocalizations.of(context)!.catTraditional),
+      (Icons.beach_access, AppLocalizations.of(context)!.catSeaside),
+      (Icons.house, AppLocalizations.of(context)!.catHouse),
+      (Icons.apartment, AppLocalizations.of(context)!.catApartment),
+      (Icons.landscape, AppLocalizations.of(context)!.catMountain),
     ];
     return SizedBox(
       height: 88,
@@ -140,7 +160,7 @@ class MpHomeScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(children: [
-              Text('今月の推奨ステイ',
+              Text(AppLocalizations.of(context)!.recommendedStays,
                   style: GoogleFonts.notoSansJp(
                       fontSize: 17, fontWeight: FontWeight.w900)),
               const SizedBox(width: 8),
@@ -149,14 +169,14 @@ class MpHomeScreen extends StatelessWidget {
                 decoration: BoxDecoration(
                     color: AppTheme.secondaryContainer,
                     borderRadius: BorderRadius.circular(10)),
-                child: Text('LIMITED',
+                child: Text(AppLocalizations.of(context)!.lblLimited,
                     style: GoogleFonts.plusJakartaSans(
                         fontSize: 10,
                         fontWeight: FontWeight.bold,
                         color: AppTheme.onSecondaryContainer)),
               ),
             ]),
-            Text('すべて見る',
+            Text(AppLocalizations.of(context)!.seeAll,
                 style: GoogleFonts.plusJakartaSans(
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
@@ -170,18 +190,23 @@ class MpHomeScreen extends StatelessWidget {
             Expanded(
               flex: 2,
               child: GestureDetector(
-                onTap: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (_) => const MpPropertyDetailScreen())),
+                onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => const MpPropertyDetailScreen())),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(14),
                   child: Stack(fit: StackFit.expand, children: [
-                    Image.network(Imgs.mpBig, fit: BoxFit.cover),
+                    CachedNetworkImage(imageUrl: Imgs.mpBig, fit: BoxFit.cover),
                     Container(
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
-                          colors: [Colors.transparent, Colors.black.withOpacity(0.7)],
+                          colors: [
+                            Colors.transparent,
+                            Colors.black.withOpacity(0.7)
+                          ],
                           stops: const [0.4, 1.0],
                         ),
                       ),
@@ -193,13 +218,13 @@ class MpHomeScreen extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('建築家と建てる、\n静寂の森の隠れ家',
+                          Text(AppLocalizations.of(context)!.mpFeature1Name.replaceFirst('、 ', '\n').replaceFirst(', ', '\n'),
                               style: GoogleFonts.notoSansJp(
                                   fontSize: 15,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white)),
                           const SizedBox(height: 4),
-                          Text('長野県・軽井沢  ¥45,000〜',
+                          Text(AppLocalizations.of(context)!.mpFeature1Loc + '  ' + AppLocalizations.of(context)!.yen + '45,000〜',
                               style: const TextStyle(
                                   fontSize: 10, color: Colors.white70)),
                         ],
@@ -212,18 +237,24 @@ class MpHomeScreen extends StatelessWidget {
             const SizedBox(width: 10),
             Expanded(
               child: GestureDetector(
-                onTap: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (_) => const MpPropertyDetailScreen())),
+                onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => const MpPropertyDetailScreen())),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(14),
                   child: Stack(fit: StackFit.expand, children: [
-                    Image.network(Imgs.mpSmall, fit: BoxFit.cover),
+                    CachedNetworkImage(
+                        imageUrl: Imgs.mpSmall, fit: BoxFit.cover),
                     Container(
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
-                          colors: [Colors.transparent, Colors.black.withOpacity(0.7)],
+                          colors: [
+                            Colors.transparent,
+                            Colors.black.withOpacity(0.7)
+                          ],
                           stops: const [0.4, 1.0],
                         ),
                       ),
@@ -232,7 +263,7 @@ class MpHomeScreen extends StatelessWidget {
                       bottom: 12,
                       left: 12,
                       right: 12,
-                      child: Text('波音と目覚める\n朝食付きヴィラ',
+                      child: Text(AppLocalizations.of(context)!.mpFeature2Name.replaceAll(', ', '\n').replaceAll('、', '\n'),
                           style: GoogleFonts.notoSansJp(
                               fontSize: 12,
                               fontWeight: FontWeight.bold,
@@ -252,14 +283,15 @@ class MpHomeScreen extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('新着物件情報',
+        Text(AppLocalizations.of(context)!.newListings,
             style: GoogleFonts.notoSansJp(
                 fontSize: 17, fontWeight: FontWeight.w900)),
         const SizedBox(height: 12),
-        ...mpProperties.take(3).map((p) => Padding(
+        ...getMpProperties(AppLocalizations.of(context)!).take(3).map((p) => Padding(
               padding: const EdgeInsets.only(bottom: 16),
               child: GestureDetector(
-                onTap: () => Navigator.push(context,
+                onTap: () => Navigator.push(
+                    context,
                     MaterialPageRoute(
                         builder: (_) => MpPropertyDetailScreen(property: p))),
                 child: _MpPropertyCard(property: p),
@@ -269,7 +301,7 @@ class MpHomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildAreaGuide() {
+  Widget _buildAreaGuide(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -279,9 +311,9 @@ class MpHomeScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('人気のエリアガイド',
-              style:
-                  GoogleFonts.notoSansJp(fontSize: 17, fontWeight: FontWeight.w900)),
+          Text(AppLocalizations.of(context)!.popularAreaGuide,
+              style: GoogleFonts.notoSansJp(
+                  fontSize: 17, fontWeight: FontWeight.w900)),
           const SizedBox(height: 12),
           SizedBox(
             height: 200,
@@ -290,12 +322,13 @@ class MpHomeScreen extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(16),
                   child: Stack(fit: StackFit.expand, children: [
-                    Image.network(Imgs.mpAreaKyoto, fit: BoxFit.cover),
+                    CachedNetworkImage(
+                        imageUrl: Imgs.mpAreaKyoto, fit: BoxFit.cover),
                     Container(color: Colors.black.withOpacity(0.3)),
                     Center(
                       child: RotatedBox(
                         quarterTurns: 1,
-                        child: Text('京都・東山',
+                        child: Text(AppLocalizations.of(context)!.mpAreaKyoto,
                             style: GoogleFonts.notoSansJp(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w900,
@@ -313,12 +346,13 @@ class MpHomeScreen extends StatelessWidget {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(14),
                       child: Stack(fit: StackFit.expand, children: [
-                        Image.network(Imgs.mpAreaTokyo, fit: BoxFit.cover),
+                        CachedNetworkImage(
+                            imageUrl: Imgs.mpAreaTokyo, fit: BoxFit.cover),
                         Container(color: Colors.black.withOpacity(0.25)),
                         Positioned(
                           bottom: 12,
                           left: 12,
-                          child: Text('東京・渋谷',
+                          child: Text(AppLocalizations.of(context)!.mpAreaTokyo,
                               style: GoogleFonts.notoSansJp(
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold,
@@ -332,12 +366,13 @@ class MpHomeScreen extends StatelessWidget {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(14),
                       child: Stack(fit: StackFit.expand, children: [
-                        Image.network(Imgs.mpAreaOkinawa, fit: BoxFit.cover),
+                        CachedNetworkImage(
+                            imageUrl: Imgs.mpAreaOkinawa, fit: BoxFit.cover),
                         Container(color: Colors.black.withOpacity(0.25)),
                         Positioned(
                           bottom: 12,
                           left: 12,
-                          child: Text('沖縄・恩納村',
+                          child: Text(AppLocalizations.of(context)!.mpAreaOkinawa,
                               style: GoogleFonts.notoSansJp(
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold,
@@ -358,9 +393,10 @@ class MpHomeScreen extends StatelessWidget {
                 foregroundColor: AppTheme.primary,
                 side: const BorderSide(color: AppTheme.primary),
                 shape: const StadiumBorder(),
-                padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
               ),
-              child: Text('エリア一覧を見る',
+              child: Text(AppLocalizations.of(context)!.viewAllAreas,
                   style: GoogleFonts.notoSansJp(
                       fontSize: 13, fontWeight: FontWeight.bold)),
             ),
@@ -388,8 +424,10 @@ class _MpPropertyCard extends StatelessWidget {
                 SizedBox(
                   width: 110,
                   height: 110,
-                  child: Image.network(property.image, fit: BoxFit.cover,
-                      errorBuilder: (_, __, ___) =>
+                  child: CachedNetworkImage(
+                      imageUrl: property.image,
+                      fit: BoxFit.cover,
+                      errorWidget: (_, __, ___) =>
                           Container(color: AppTheme.surfaceContainerHigh)),
                 ),
                 if (property.isNew)
@@ -397,12 +435,13 @@ class _MpPropertyCard extends StatelessWidget {
                     top: 6,
                     left: 6,
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 6, vertical: 2),
                       decoration: BoxDecoration(
                         color: AppTheme.primaryContainer,
                         borderRadius: BorderRadius.circular(4),
                       ),
-                      child: Text('NEW',
+                      child: Text(AppLocalizations.of(context)!.lblNew,
                           style: GoogleFonts.plusJakartaSans(
                               fontSize: 8,
                               fontWeight: FontWeight.bold,
@@ -456,7 +495,8 @@ class _MpPropertyCard extends StatelessWidget {
                             ),
                             child: Text(t,
                                 style: GoogleFonts.notoSansJp(
-                                    fontSize: 9, color: AppTheme.onSurfaceVariant)),
+                                    fontSize: 9,
+                                    color: AppTheme.onSurfaceVariant)),
                           ))
                       .toList(),
                 ),
@@ -465,12 +505,12 @@ class _MpPropertyCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.baseline,
                   textBaseline: TextBaseline.alphabetic,
                   children: [
-                    Text(property.price,
+                    Text(AppLocalizations.of(context)!.yen + property.price,
                         style: GoogleFonts.plusJakartaSans(
                             fontSize: 18,
                             fontWeight: FontWeight.w900,
                             color: AppTheme.primary)),
-                    Text(' / 泊',
+                    Text(AppLocalizations.of(context)!.perNight,
                         style: GoogleFonts.notoSansJp(
                             fontSize: 10,
                             color: AppTheme.outline,

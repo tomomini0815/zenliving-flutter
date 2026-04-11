@@ -22,7 +22,8 @@ class SuccessScreen extends StatelessWidget {
                   tween: Tween(begin: 0.0, end: 1.0),
                   duration: const Duration(milliseconds: 600),
                   curve: Curves.elasticOut,
-                  builder: (_, v, child) => Transform.scale(scale: v, child: child),
+                  builder: (_, v, child) =>
+                      Transform.scale(scale: v, child: child),
                   child: Container(
                     width: 120,
                     height: 120,

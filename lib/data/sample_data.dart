@@ -1,3 +1,5 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 class Imgs {
   static const userAvatar =
       'https://lh3.googleusercontent.com/aida-public/AB6AXuBuQFhkAQDaM0tFupO2oDxLvCpIle4lBdTGMLA8RGYynKsbCRV_lE3oztiT9O9EDTTdiDzL3UObdaWuG3m1ptpDmSBkzteDETM4cNjJxRcDRFn91TQ91thEdLAVQ5UM_vJD8J58lraWWsC6Vz99u-m1qHkQXYgOPvOZI-ckBZuGvFYqTdHihjjwsnLQCZDOePbaJbWm5NGoqMy8luDKanfVQXkWefOiseoAjH62aihSncWuiT17_mZ7TXp9gBcR95lClbQkt_M31RFZ';
@@ -24,7 +26,7 @@ class Imgs {
 
   // Minpaku
   static const mpBig =
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuBMjUIZ9BCt-kHavV07W0trJfiOlvutEpT_B-zJ-0QXi3NTTq_AjSwlptklQKl-KnGmDnvwbLOA7WLTPgQUQ7XjPhM9_TfJJHLxjUe_aFlmaIMYv0yGTV5844TV_q03zIYPd20-RwOGWkf4uvu9xCVmN59JnvXG83M-miRFbQNixKL7rDRShHFDOvwvs1vPxojsZpaqUDj9wnsk8RnzPA-tf8baTnv_J1V8LHEeM6BLptKy9F_mRQQoWO_T93yNnvvHgPhATN888n6j';
+      'https://images.unsplash.com/photo-1542718610-a1d656d1884c?q=80&w=2070&auto=format&fit=crop';
   static const mpSmall =
       'https://lh3.googleusercontent.com/aida-public/AB6AXuAD45R_ZSMo8NgRCd8cdj1rdTlxjJ43dXq9YC56U_IhM91SBVSkh5X-0K3OsMTORKMnUGCo_8x9CPyR9wVwQXHXyRlnZ_-YVr9drZ6qmMLnlSKCAZHlwpsfrjzMA5aW7y7vFSeSVT_wZB8dBbk7NG3UFhwd-obdqDRICx257_9a5kbBc7M7LtEtv_6F9crbkieqTm4t8w0j5HopP90zN_dF1OHoUt6fRyiB0VBmrDVnWEJ7okWf6CIWiV4exLVRC7n4py40GnKpOu8-';
   static const mp1 =
@@ -87,30 +89,30 @@ class MpProperty {
   });
 }
 
-final reProperties = [
+List<ReProperty> getReProperties(AppLocalizations l10n) => [
   ReProperty(
     id: 're_1',
-    name: 'パークアクシス代官山',
+    name: l10n.re1Name,
     price: '18.5',
-    layout: '1LDK / 42.5m²',
-    station: '代官山駅 徒歩4分',
+    layout: l10n.re1Layout,
+    station: l10n.re1Station,
     image: Imgs.re4,
     isNew: true,
   ),
   ReProperty(
     id: 're_2',
-    name: 'レジディア目黒長者丸',
+    name: l10n.re2Name,
     price: '24.2',
-    layout: '2LDK / 58.2m²',
-    station: '目黒駅 徒歩8分',
+    layout: l10n.re2Layout,
+    station: l10n.re2Station,
     image: Imgs.re5,
   ),
   ReProperty(
     id: 're_3',
-    name: 'プレミスト恵比寿',
+    name: l10n.re3Name,
     price: '32.0',
-    layout: '3LDK / 75.8m²',
-    station: '恵比寿駅 徒歩6分',
+    layout: l10n.re3Layout,
+    station: l10n.re3Station,
     image: Imgs.re1,
   ),
   ReProperty(
@@ -132,14 +134,14 @@ final reProperties = [
   ),
 ];
 
-final mpProperties = [
+List<MpProperty> getMpProperties(AppLocalizations l10n) => [
   MpProperty(
     id: 'mp_1',
-    name: '築120年の古民家を再生した一棟貸し宿',
-    location: 'KYOTO / KAMIGAWA',
-    price: '¥12,800',
+    name: l10n.mp1Name,
+    location: l10n.mp1Loc,
+    price: '12,800',
     rating: 4.92,
-    tags: ['サウナ付', 'ペット可'],
+    tags: [l10n.catTraditional, l10n.mpTagKyoto],
     image: Imgs.mp1,
     isNew: true,
   ),
@@ -147,38 +149,38 @@ final mpProperties = [
     id: 'mp_2',
     name: '代々木公園を望む、ルーフテラス付アパートメント',
     location: 'TOKYO / SHIBUYA',
-    price: '¥18,500',
+    price: '18,500',
     rating: 4.85,
-    tags: ['テレワーク', '駅近'],
+    tags: [l10n.catApartment],
     image: Imgs.mp2,
     isNew: true,
   ),
   MpProperty(
     id: 'mp_3',
-    name: '360度パノラマビュー、丘の上に佇む北欧スタイルの家',
-    location: 'HOKKAIDO / BIEI',
-    price: '¥24,000',
+    name: l10n.mp3Name,
+    location: l10n.mp3Loc,
+    price: '24,000',
     rating: 5.00,
-    tags: ['暖炉', '自然豊か'],
+    tags: [l10n.mpTagNature],
     image: Imgs.mp3,
     isNew: true,
   ),
   MpProperty(
     id: 'mp_4',
-    name: '建築家と建てる、静寂の森の隠れ家',
-    location: 'NAGANO / KARUIZAWA',
-    price: '¥45,000',
+    name: l10n.mpFeature1Name,
+    location: l10n.mpFeature1Loc,
+    price: '45,000',
     rating: 4.97,
-    tags: ['森の中', '完全貸切'],
+    tags: [l10n.mpTagForest, l10n.mpTagPrivate],
     image: Imgs.mpBig,
   ),
   MpProperty(
     id: 'mp_5',
-    name: '波音と目覚める朝食付きヴィラ',
-    location: 'OKINAWA / ONNA',
-    price: '¥38,000',
+    name: l10n.mpFeature2Name,
+    location: l10n.mpFeature2Loc,
+    price: '38,000',
     rating: 4.88,
-    tags: ['オーシャンビュー', '朝食付'],
+    tags: [l10n.catSeaside],
     image: Imgs.mpSmall,
   ),
 ];

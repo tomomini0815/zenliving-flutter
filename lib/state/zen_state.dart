@@ -1,5 +1,6 @@
 import 'dart:convert';
-import 'package:flutter/foundation.dart';
+import 'dart:async';
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 enum AppMode { realEstate, minpaku }
@@ -10,7 +11,9 @@ class ZenState extends ChangeNotifier {
   final List<Map<String, dynamic>> _reservations = [];
   int _tabIndex = 0;
   String? _toastMessage;
+  Timer? _toastTimer;
   bool _isInitialized = false;
+  Locale _locale = const Locale('ja');
 
   AppMode get mode => _mode;
   Set<String> get favorites => Set.unmodifiable(_favorites);
@@ -19,6 +22,7 @@ class ZenState extends ChangeNotifier {
   int get tabIndex => _tabIndex;
   String? get toastMessage => _toastMessage;
   bool get isInitialized => _isInitialized;
+  Locale get locale => _locale;
 
   ZenState() {
     _initStore();
@@ -48,6 +52,11 @@ class ZenState extends ChangeNotifier {
       _mode = AppMode.minpaku;
     }
 
+    final savedLocale = prefs.getString('zen_locale');
+    if (savedLocale != null) {
+      _locale = Locale(savedLocale);
+    }
+
     _isInitialized = true;
     notifyListeners();
   }
@@ -61,6 +70,12 @@ class ZenState extends ChangeNotifier {
 
   void setTabIndex(int index) {
     _tabIndex = index;
+    notifyListeners();
+  }
+
+  void setLocale(String languageCode) {
+    _locale = Locale(languageCode);
+    _saveToPrefs();
     notifyListeners();
   }
 
@@ -89,12 +104,14 @@ class ZenState extends ChangeNotifier {
     await prefs.setStringList('zen_favorites', _favorites.toList());
     await prefs.setString('zen_reservations', jsonEncode(_reservations));
     await prefs.setString('zen_mode', _mode == AppMode.minpaku ? 'minpaku' : 'realEstate');
+    await prefs.setString('zen_locale', _locale.languageCode);
   }
 
   void _showToast(String message) {
     _toastMessage = message;
     notifyListeners();
-    Future.delayed(const Duration(seconds: 3), () {
+    _toastTimer?.cancel();
+    _toastTimer = Timer(const Duration(seconds: 3), () {
       _toastMessage = null;
       notifyListeners();
     });

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../theme/app_theme.dart';
 import '../../data/sample_data.dart';
@@ -13,10 +14,12 @@ class ReMypageScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppTheme.surface,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+        centerTitle: true,
         backgroundColor: AppTheme.surface,
         elevation: 0,
         titleSpacing: 0,
-        title: Row(children: [
+        title: Row(mainAxisSize: MainAxisSize.min, children: [
           const Icon(Icons.home_work, color: Color(0xFF1B5E20), size: 20),
           const SizedBox(width: 8),
           Text('ZenLiving',
@@ -29,7 +32,8 @@ class ReMypageScreen extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.notifications_outlined,
                 color: AppTheme.onSurfaceVariant),
-            onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const NotificationScreen())),
+            onPressed: () => Navigator.push(context,
+                MaterialPageRoute(builder: (_) => const NotificationScreen())),
           ),
         ],
       ),
@@ -44,7 +48,8 @@ class ReMypageScreen extends StatelessWidget {
                 color: AppTheme.surfaceContainerLowest,
                 borderRadius: BorderRadius.circular(16),
                 boxShadow: [
-                  BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 16)
+                  BoxShadow(
+                      color: Colors.black.withOpacity(0.04), blurRadius: 16)
                 ],
               ),
               child: Row(
@@ -52,9 +57,12 @@ class ReMypageScreen extends StatelessWidget {
                   Stack(
                     children: [
                       ClipOval(
-                        child: Image.network(Imgs.userAvatar,
-                            width: 64, height: 64, fit: BoxFit.cover,
-                            errorBuilder: (_, __, ___) => Container(
+                        child: CachedNetworkImage(
+                            imageUrl: Imgs.userAvatar,
+                            width: 64,
+                            height: 64,
+                            fit: BoxFit.cover,
+                            errorWidget: (_, __, ___) => Container(
                                 width: 64,
                                 height: 64,
                                 color: AppTheme.surfaceContainerHigh,
@@ -101,7 +109,8 @@ class ReMypageScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  const Icon(Icons.chevron_right, color: AppTheme.outlineVariant),
+                  const Icon(Icons.chevron_right,
+                      color: AppTheme.outlineVariant),
                 ],
               ),
             ),
@@ -109,11 +118,14 @@ class ReMypageScreen extends StatelessWidget {
             // Stats
             Row(
               children: [
-                Expanded(child: _StatCard(label: 'お気に入り', value: '12', unit: '件')),
+                Expanded(
+                    child: _StatCard(label: 'お気に入り', value: '12', unit: '件')),
                 const SizedBox(width: 8),
-                Expanded(child: _StatCard(label: '最近見た', value: '24', unit: '件')),
+                Expanded(
+                    child: _StatCard(label: '最近見た', value: '24', unit: '件')),
                 const SizedBox(width: 8),
-                Expanded(child: _StatCard(label: '保存条件', value: '5', unit: '件')),
+                Expanded(
+                    child: _StatCard(label: '保存条件', value: '5', unit: '件')),
               ],
             ),
             const SizedBox(height: 20),
@@ -132,7 +144,8 @@ class ReMypageScreen extends StatelessWidget {
             _SectionLabel(label: 'SETTINGS'),
             const SizedBox(height: 8),
             _MenuGroup(items: [
-              _MenuItem(icon: Icons.notifications_active_outlined, label: 'プッシュ通知設定'),
+              _MenuItem(
+                  icon: Icons.notifications_active_outlined, label: 'プッシュ通知設定'),
               _MenuItem(icon: Icons.account_circle_outlined, label: 'アカウント情報'),
               _MenuItem(icon: Icons.policy_outlined, label: 'プライバシーポリシー'),
               _MenuItem(icon: Icons.help_outline, label: 'ヘルプ・お問い合わせ'),
@@ -154,10 +167,12 @@ class ReMypageScreen extends StatelessWidget {
               child: Column(children: [
                 Text('ZENLIVING APP',
                     style: GoogleFonts.plusJakartaSans(
-                        fontSize: 10, letterSpacing: 2, fontWeight: FontWeight.bold)),
+                        fontSize: 10,
+                        letterSpacing: 2,
+                        fontWeight: FontWeight.bold)),
                 Text('VERSION 5.0.0',
-                    style:
-                        GoogleFonts.plusJakartaSans(fontSize: 10, letterSpacing: 1)),
+                    style: GoogleFonts.plusJakartaSans(
+                        fontSize: 10, letterSpacing: 1)),
               ]),
             ),
             const SizedBox(height: 80),
@@ -172,7 +187,8 @@ class _StatCard extends StatelessWidget {
   final String label;
   final String value;
   final String unit;
-  const _StatCard({required this.label, required this.value, required this.unit});
+  const _StatCard(
+      {required this.label, required this.value, required this.unit});
 
   @override
   Widget build(BuildContext context) {
@@ -266,7 +282,8 @@ class _MenuGroup extends StatelessWidget {
                     color: AppTheme.outlineVariant.withOpacity(0.3)),
               ListTile(
                 leading: Icon(item.icon,
-                    color: item.isDestructive ? AppTheme.error : AppTheme.primary,
+                    color:
+                        item.isDestructive ? AppTheme.error : AppTheme.primary,
                     size: 22),
                 title: Text(item.label,
                     style: GoogleFonts.notoSansJp(
@@ -286,7 +303,8 @@ class _MenuGroup extends StatelessWidget {
                     if (item.badge != null)
                       Container(
                         margin: const EdgeInsets.only(right: 8),
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 2),
                         decoration: BoxDecoration(
                             color: AppTheme.secondaryContainer,
                             borderRadius: BorderRadius.circular(10)),
@@ -297,7 +315,8 @@ class _MenuGroup extends StatelessWidget {
                                 color: AppTheme.onSecondaryContainer)),
                       ),
                     Icon(Icons.chevron_right,
-                        color: AppTheme.outlineVariant.withOpacity(0.7), size: 20),
+                        color: AppTheme.outlineVariant.withOpacity(0.7),
+                        size: 20),
                   ],
                 ),
                 onTap: item.onTap ?? () {},

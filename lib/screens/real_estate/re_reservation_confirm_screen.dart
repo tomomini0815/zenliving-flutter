@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../../theme/app_theme.dart';
@@ -53,7 +54,8 @@ class _ReReservationConfirmScreenState
                     child: SizedBox(
                       width: 80,
                       height: 80,
-                      child: Image.network(Imgs.re4, fit: BoxFit.cover),
+                      child: CachedNetworkImage(
+                          imageUrl: Imgs.re4, fit: BoxFit.cover),
                     ),
                   ),
                   const SizedBox(width: 14),
@@ -67,8 +69,7 @@ class _ReReservationConfirmScreenState
                                 fontWeight: FontWeight.bold,
                                 color: AppTheme.primary)),
                         const SizedBox(height: 4),
-                        Text(
-                            widget.property?.name ?? 'パークアクシス代官山',
+                        Text(widget.property?.name ?? 'パークアクシス代官山',
                             style: GoogleFonts.notoSansJp(
                                 fontSize: 14, fontWeight: FontWeight.bold)),
                         const SizedBox(height: 6),
@@ -104,11 +105,11 @@ class _ReReservationConfirmScreenState
                 style: GoogleFonts.notoSansJp(
                     fontSize: 16, fontWeight: FontWeight.bold)),
             const SizedBox(height: 12),
-            _buildPaymentOption(0, Icons.credit_card, 'クレジットカード',
-                'VISA, Mastercard, AMEX'),
+            _buildPaymentOption(
+                0, Icons.credit_card, 'クレジットカード', 'VISA, Mastercard, AMEX'),
             const SizedBox(height: 8),
-            _buildPaymentOption(1, Icons.account_balance, '銀行振込',
-                '振込手数料はお客様負担となります'),
+            _buildPaymentOption(
+                1, Icons.account_balance, '銀行振込', '振込手数料はお客様負担となります'),
             const SizedBox(height: 100),
           ],
         ),
@@ -129,8 +130,7 @@ class _ReReservationConfirmScreenState
                 Text('月額賃料（税込）',
                     style: GoogleFonts.notoSansJp(
                         fontSize: 12, color: AppTheme.onSurfaceVariant)),
-                Text(
-                    '${widget.property?.price ?? '18.5'}万円',
+                Text('${widget.property?.price ?? '18.5'}万円',
                     style: GoogleFonts.plusJakartaSans(
                         fontSize: 20,
                         fontWeight: FontWeight.w900,
@@ -195,7 +195,8 @@ class _ReReservationConfirmScreenState
               borderRadius: BorderRadius.circular(12),
               borderSide: BorderSide.none,
             ),
-            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
           ),
         ),
       ],
@@ -239,7 +240,9 @@ class _ReReservationConfirmScreenState
               ),
             ),
             Icon(
-              selected ? Icons.radio_button_checked : Icons.radio_button_unchecked,
+              selected
+                  ? Icons.radio_button_checked
+                  : Icons.radio_button_unchecked,
               color: selected ? AppTheme.primary : AppTheme.onSurfaceVariant,
             ),
           ],

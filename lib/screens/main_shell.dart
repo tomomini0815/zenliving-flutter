@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../state/zen_state.dart';
 import '../theme/app_theme.dart';
 import 'real_estate/re_home_screen.dart';
@@ -76,7 +77,9 @@ class _ZenToast extends StatelessWidget {
         decoration: BoxDecoration(
           color: AppTheme.onSurface.withOpacity(0.92),
           borderRadius: BorderRadius.circular(100),
-          boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.15), blurRadius: 20)],
+          boxShadow: [
+            BoxShadow(color: Colors.black.withOpacity(0.15), blurRadius: 20)
+          ],
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -112,43 +115,51 @@ class _ZenBottomNav extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final reItems = const [
+    final l10n = AppLocalizations.of(context)!;
+    final reItems = [
       BottomNavigationBarItem(
-          icon: Icon(Icons.home_outlined), activeIcon: Icon(Icons.home), label: 'ホーム'),
-      BottomNavigationBarItem(icon: Icon(Icons.search), label: '検索'),
+          icon: const Icon(Icons.home_outlined),
+          activeIcon: const Icon(Icons.home),
+          label: l10n.navHome),
       BottomNavigationBarItem(
-          icon: Icon(Icons.favorite_outline),
-          activeIcon: Icon(Icons.favorite),
-          label: 'お気に入り'),
+          icon: const Icon(Icons.search), label: l10n.navSearch),
       BottomNavigationBarItem(
-          icon: Icon(Icons.person_outline),
-          activeIcon: Icon(Icons.person),
-          label: 'マイページ'),
+          icon: const Icon(Icons.favorite_outline),
+          activeIcon: const Icon(Icons.favorite),
+          label: l10n.navFavorites),
+      BottomNavigationBarItem(
+          icon: const Icon(Icons.person_outline),
+          activeIcon: const Icon(Icons.person),
+          label: l10n.navMyPage),
     ];
 
-    final mpItems = const [
+    final mpItems = [
       BottomNavigationBarItem(
-          icon: Icon(Icons.home_outlined), activeIcon: Icon(Icons.home), label: 'ホーム'),
-      BottomNavigationBarItem(icon: Icon(Icons.search), label: '検索'),
+          icon: const Icon(Icons.home_outlined),
+          activeIcon: const Icon(Icons.home),
+          label: l10n.navHome),
       BottomNavigationBarItem(
-          icon: Icon(Icons.event_available_outlined),
-          activeIcon: Icon(Icons.event_available),
-          label: '予約済み'),
+          icon: const Icon(Icons.search), label: l10n.navSearch),
       BottomNavigationBarItem(
-          icon: Icon(Icons.favorite_outline),
-          activeIcon: Icon(Icons.favorite),
-          label: 'お気に入り'),
+          icon: const Icon(Icons.event_available_outlined),
+          activeIcon: const Icon(Icons.event_available),
+          label: l10n.navReservations),
       BottomNavigationBarItem(
-          icon: Icon(Icons.person_outline),
-          activeIcon: Icon(Icons.person),
-          label: 'マイページ'),
+          icon: const Icon(Icons.favorite_outline),
+          activeIcon: const Icon(Icons.favorite),
+          label: l10n.navFavorites),
+      BottomNavigationBarItem(
+          icon: const Icon(Icons.person_outline),
+          activeIcon: const Icon(Icons.person),
+          label: l10n.navMyPage),
     ];
 
     return Container(
       decoration: BoxDecoration(
         color: Colors.white.withOpacity(0.88),
         border: Border(
-            top: BorderSide(color: AppTheme.outlineVariant.withOpacity(0.3), width: 0.5)),
+            top: BorderSide(
+                color: AppTheme.outlineVariant.withOpacity(0.3), width: 0.5)),
         boxShadow: [
           BoxShadow(
               color: Colors.black.withOpacity(0.04),

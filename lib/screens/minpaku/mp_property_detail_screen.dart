@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../../theme/app_theme.dart';
@@ -37,7 +38,8 @@ class MpPropertyDetailScreen extends StatelessWidget {
               child: Container(
                 margin: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.9), shape: BoxShape.circle),
+                    color: Colors.white.withOpacity(0.9),
+                    shape: BoxShape.circle),
                 child: const Icon(Icons.arrow_back, color: AppTheme.onSurface),
               ),
             ),
@@ -64,8 +66,10 @@ class MpPropertyDetailScreen extends StatelessWidget {
               }),
             ],
             flexibleSpace: FlexibleSpaceBar(
-              background: Image.network(p.image, fit: BoxFit.cover,
-                  errorBuilder: (_, __, ___) =>
+              background: CachedNetworkImage(
+                  imageUrl: p.image,
+                  fit: BoxFit.cover,
+                  errorWidget: (_, __, ___) =>
                       Container(color: AppTheme.surfaceContainerHigh)),
             ),
           ),
@@ -122,17 +126,18 @@ class MpPropertyDetailScreen extends StatelessWidget {
                       color: AppTheme.surfaceContainerLow,
                       borderRadius: BorderRadius.circular(16)),
                   child: Column(children: [
-                    _InfoRow(icon: Icons.calendar_month,
-                        label: 'チェックイン', value: '15:00以降'),
+                    _InfoRow(
+                        icon: Icons.calendar_month,
+                        label: 'チェックイン',
+                        value: '15:00以降'),
                     const Divider(height: 20),
-                    _InfoRow(icon: Icons.logout,
-                        label: 'チェックアウト', value: '11:00まで'),
+                    _InfoRow(
+                        icon: Icons.logout, label: 'チェックアウト', value: '11:00まで'),
                     const Divider(height: 20),
-                    _InfoRow(icon: Icons.group,
-                        label: '最大宿泊人数', value: '4名'),
+                    _InfoRow(icon: Icons.group, label: '最大宿泊人数', value: '4名'),
                     const Divider(height: 20),
-                    _InfoRow(icon: Icons.smoking_rooms,
-                        label: '禁煙', value: '全館禁煙'),
+                    _InfoRow(
+                        icon: Icons.smoking_rooms, label: '禁煙', value: '全館禁煙'),
                   ]),
                 ),
                 const SizedBox(height: 20),
@@ -154,8 +159,8 @@ class MpPropertyDetailScreen extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: AppTheme.secondaryContainer.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(12),
-                    border: Border.all(
-                        color: AppTheme.secondary.withOpacity(0.2)),
+                    border:
+                        Border.all(color: AppTheme.secondary.withOpacity(0.2)),
                   ),
                   child: Row(children: [
                     const Icon(Icons.stars_rounded,
@@ -211,7 +216,8 @@ class MpPropertyDetailScreen extends StatelessWidget {
           const SizedBox(width: 16),
           Expanded(
             child: ElevatedButton(
-              onPressed: () => Navigator.push(context,
+              onPressed: () => Navigator.push(
+                  context,
                   MaterialPageRoute(
                       builder: (_) => MpReservationConfirmScreen(property: p))),
               style: ElevatedButton.styleFrom(
@@ -234,7 +240,8 @@ class _InfoRow extends StatelessWidget {
   final IconData icon;
   final String label;
   final String value;
-  const _InfoRow({required this.icon, required this.label, required this.value});
+  const _InfoRow(
+      {required this.icon, required this.label, required this.value});
 
   @override
   Widget build(BuildContext context) {

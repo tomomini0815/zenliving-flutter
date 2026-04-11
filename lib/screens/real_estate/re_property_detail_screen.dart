@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../../theme/app_theme.dart';
@@ -56,15 +57,19 @@ class RePropertyDetailScreen extends StatelessWidget {
                       state.isFavorite(p.id)
                           ? Icons.favorite
                           : Icons.favorite_border,
-                      color: state.isFavorite(p.id) ? AppTheme.error : AppTheme.onSurface,
+                      color: state.isFavorite(p.id)
+                          ? AppTheme.error
+                          : AppTheme.onSurface,
                     ),
                   ),
                 );
               }),
             ],
             flexibleSpace: FlexibleSpaceBar(
-              background: Image.network(p.image, fit: BoxFit.cover,
-                  errorBuilder: (_, __, ___) =>
+              background: CachedNetworkImage(
+                  imageUrl: p.image,
+                  fit: BoxFit.cover,
+                  errorWidget: (_, __, ___) =>
                       Container(color: AppTheme.surfaceContainerHigh)),
             ),
           ),
@@ -74,7 +79,8 @@ class RePropertyDetailScreen extends StatelessWidget {
               delegate: SliverChildListDelegate([
                 if (p.isNew)
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                     margin: const EdgeInsets.only(bottom: 12),
                     decoration: BoxDecoration(
                         color: AppTheme.primaryContainer,
@@ -100,7 +106,8 @@ class RePropertyDetailScreen extends StatelessWidget {
                             color: AppTheme.primary)),
                     Text('万円 / 月',
                         style: GoogleFonts.notoSansJp(
-                            fontSize: 14, color: AppTheme.primary,
+                            fontSize: 14,
+                            color: AppTheme.primary,
                             fontWeight: FontWeight.bold)),
                   ],
                 ),
@@ -112,7 +119,10 @@ class RePropertyDetailScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(16)),
                   child: Column(
                     children: [
-                      _InfoRow(icon: Icons.grid_view, label: '間取り・広さ', value: p.layout),
+                      _InfoRow(
+                          icon: Icons.grid_view,
+                          label: '間取り・広さ',
+                          value: p.layout),
                       const Divider(height: 20),
                       _InfoRow(
                           icon: Icons.directions_walk,
@@ -124,10 +134,7 @@ class RePropertyDetailScreen extends StatelessWidget {
                           label: '築年数',
                           value: '築3年（2021年竣工）'),
                       const Divider(height: 20),
-                      _InfoRow(
-                          icon: Icons.pets,
-                          label: 'ペット',
-                          value: '相談可'),
+                      _InfoRow(icon: Icons.pets, label: 'ペット', value: '相談可'),
                     ],
                   ),
                 ),
@@ -162,7 +169,9 @@ class RePropertyDetailScreen extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('月額賃料', style: GoogleFonts.notoSansJp(fontSize: 11, color: AppTheme.onSurfaceVariant)),
+                Text('月額賃料',
+                    style: GoogleFonts.notoSansJp(
+                        fontSize: 11, color: AppTheme.onSurfaceVariant)),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.baseline,
                   textBaseline: TextBaseline.alphabetic,
@@ -174,7 +183,8 @@ class RePropertyDetailScreen extends StatelessWidget {
                             color: AppTheme.primary)),
                     Text('万円',
                         style: GoogleFonts.notoSansJp(
-                            fontSize: 11, color: AppTheme.primary,
+                            fontSize: 11,
+                            color: AppTheme.primary,
                             fontWeight: FontWeight.bold)),
                   ],
                 ),
@@ -183,8 +193,11 @@ class RePropertyDetailScreen extends StatelessWidget {
             const SizedBox(width: 16),
             Expanded(
               child: ElevatedButton(
-                onPressed: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (_) => ReReservationConfirmScreen(property: p))),
+                onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) =>
+                            ReReservationConfirmScreen(property: p))),
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(
@@ -206,7 +219,8 @@ class _InfoRow extends StatelessWidget {
   final IconData icon;
   final String label;
   final String value;
-  const _InfoRow({required this.icon, required this.label, required this.value});
+  const _InfoRow(
+      {required this.icon, required this.label, required this.value});
 
   @override
   Widget build(BuildContext context) {

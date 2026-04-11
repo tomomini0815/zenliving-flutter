@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../theme/app_theme.dart';
 import '../../data/sample_data.dart';
@@ -13,9 +14,11 @@ class MpMypageScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppTheme.surface,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+        centerTitle: true,
         backgroundColor: AppTheme.surface,
         elevation: 0,
-        title: Row(children: [
+        title: Row(mainAxisSize: MainAxisSize.min, children: [
           const Icon(Icons.home_work, color: Color(0xFF1B5E20), size: 20),
           const SizedBox(width: 8),
           Text('ZenLiving',
@@ -28,7 +31,8 @@ class MpMypageScreen extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.notifications_outlined,
                 color: Color(0xFF0D631B)),
-            onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const NotificationScreen())),
+            onPressed: () => Navigator.push(context,
+                MaterialPageRoute(builder: (_) => const NotificationScreen())),
           ),
         ],
       ),
@@ -40,9 +44,12 @@ class MpMypageScreen extends StatelessWidget {
           Row(children: [
             Stack(children: [
               ClipOval(
-                child: Image.network(Imgs.userAvatar,
-                    width: 80, height: 80, fit: BoxFit.cover,
-                    errorBuilder: (_, __, ___) => Container(
+                child: CachedNetworkImage(
+                    imageUrl: Imgs.userAvatar,
+                    width: 80,
+                    height: 80,
+                    fit: BoxFit.cover,
+                    errorWidget: (_, __, ___) => Container(
                         width: 80,
                         height: 80,
                         color: AppTheme.surfaceContainerHigh,
@@ -71,7 +78,8 @@ class MpMypageScreen extends StatelessWidget {
                       fontSize: 12, color: AppTheme.onSurfaceVariant)),
               const SizedBox(height: 8),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                 decoration: BoxDecoration(
                     color: AppTheme.surfaceContainerHighest,
                     borderRadius: BorderRadius.circular(16)),
@@ -112,12 +120,14 @@ class MpMypageScreen extends StatelessWidget {
                 height: 120,
                 width: double.infinity,
                 child: Stack(fit: StackFit.expand, children: [
-                  Image.network(Imgs.mpReservation, fit: BoxFit.cover),
+                  CachedNetworkImage(
+                      imageUrl: Imgs.mpReservation, fit: BoxFit.cover),
                   Positioned(
                     top: 12,
                     left: 12,
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 4),
                       decoration: BoxDecoration(
                           color: Colors.white.withOpacity(0.85),
                           borderRadius: BorderRadius.circular(20)),
@@ -132,35 +142,38 @@ class MpMypageScreen extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.all(14),
-                child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Text('鎌倉 隠れ家ヴィラ',
-                      style: GoogleFonts.notoSansJp(
-                          fontSize: 15, fontWeight: FontWeight.bold)),
-                  const SizedBox(height: 4),
-                  Row(children: [
-                    const Icon(Icons.calendar_month,
-                        size: 14, color: AppTheme.onSurfaceVariant),
-                    const SizedBox(width: 6),
-                    Text('2023年11月12日 - 11月14日 (2泊)',
-                        style: GoogleFonts.notoSansJp(
-                            fontSize: 12, color: AppTheme.onSurfaceVariant)),
-                  ]),
-                  const SizedBox(height: 12),
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12)),
-                      ),
-                      child: Text('予約詳細を見る',
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('鎌倉 隠れ家ヴィラ',
                           style: GoogleFonts.notoSansJp(
-                              fontSize: 13, fontWeight: FontWeight.bold)),
-                    ),
-                  ),
-                ]),
+                              fontSize: 15, fontWeight: FontWeight.bold)),
+                      const SizedBox(height: 4),
+                      Row(children: [
+                        const Icon(Icons.calendar_month,
+                            size: 14, color: AppTheme.onSurfaceVariant),
+                        const SizedBox(width: 6),
+                        Text('2023年11月12日 - 11月14日 (2泊)',
+                            style: GoogleFonts.notoSansJp(
+                                fontSize: 12,
+                                color: AppTheme.onSurfaceVariant)),
+                      ]),
+                      const SizedBox(height: 12),
+                      SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          onPressed: () {},
+                          style: ElevatedButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(vertical: 12),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12)),
+                          ),
+                          child: Text('予約詳細を見る',
+                              style: GoogleFonts.notoSansJp(
+                                  fontSize: 13, fontWeight: FontWeight.bold)),
+                        ),
+                      ),
+                    ]),
               ),
             ]),
           ),
@@ -253,7 +266,8 @@ class MpMypageScreen extends StatelessWidget {
                 if (tile.badge != null)
                   Container(
                     margin: const EdgeInsets.only(right: 8),
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                     decoration: BoxDecoration(
                         color: AppTheme.secondaryContainer,
                         borderRadius: BorderRadius.circular(10)),

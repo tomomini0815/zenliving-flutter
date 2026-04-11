@@ -1,6 +1,9 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../theme/app_theme.dart';
 import '../../state/zen_state.dart';
 import '../../data/sample_data.dart';
@@ -18,11 +21,24 @@ class ReHomeScreen extends StatelessWidget {
         slivers: [
           SliverAppBar(
             pinned: true,
-            backgroundColor: AppTheme.surface,
+            automaticallyImplyLeading: false,
+            centerTitle: true,
+            leading: IconButton(
+              icon: const Icon(Icons.grid_view_rounded, color: AppTheme.primary, size: 24),
+              onPressed: () => Navigator.pop(context),
+            ),
+            backgroundColor: AppTheme.surface.withValues(alpha: 0.85),
+            flexibleSpace: ClipRect(
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
+                child: Container(color: Colors.transparent),
+              ),
+            ),
             elevation: 0,
-            scrolledUnderElevation: 0.5,
+            scrolledUnderElevation: 0,
             shadowColor: Colors.black.withOpacity(0.05),
             title: Row(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 const Icon(Icons.home_work, color: Color(0xFF1B5E20), size: 22),
                 const SizedBox(width: 8),
@@ -40,7 +56,10 @@ class ReHomeScreen extends StatelessWidget {
               IconButton(
                 icon: const Icon(Icons.notifications_outlined,
                     color: AppTheme.onSurfaceVariant),
-                onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const NotificationScreen())),
+                onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => const NotificationScreen())),
               ),
             ],
           ),
@@ -49,15 +68,15 @@ class ReHomeScreen extends StatelessWidget {
             sliver: SliverList(
               delegate: SliverChildListDelegate([
                 const SizedBox(height: 8),
-                _buildSearchSection(),
+                _buildSearchSection(context),
                 const SizedBox(height: 16),
-                _buildCategoryGrid(),
+                _buildCategoryGrid(context),
                 const SizedBox(height: 28),
-                _buildFeaturedSection(),
+                _buildFeaturedSection(context),
                 const SizedBox(height: 28),
                 _buildNewListings(context),
                 const SizedBox(height: 28),
-                _buildAreaGuide(),
+                _buildAreaGuide(context),
                 const SizedBox(height: 100),
               ]),
             ),
@@ -67,32 +86,35 @@ class ReHomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSearchSection() {
-    return Container(
+  Widget _buildSearchSection(BuildContext context) {
+    return Container(clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         color: AppTheme.surfaceContainerLowest,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 16)],
+        
+        borderRadius: BorderRadius.circular(24),
+        boxShadow: [
+          BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 16)
+        ],
       ),
       padding: const EdgeInsets.all(12),
       child: Column(
         children: [
-          _SearchButton(icon: Icons.train, label: 'エリア・沿線から探す'),
+          _SearchButton(icon: Icons.train, label: AppLocalizations.of(context)!.searchByAreaLine),
           const SizedBox(height: 8),
-          _SearchButton(icon: Icons.my_location, label: '現在地から探す'),
+          _SearchButton(icon: Icons.my_location, label: AppLocalizations.of(context)!.searchByCurrentLoc),
         ],
       ),
     );
   }
 
-  Widget _buildCategoryGrid() {
-    const cats = [
-      (Icons.apartment, '賃貸'),
-      (Icons.location_city, 'マンション'),
-      (Icons.home, '一戸建て'),
-      (Icons.landscape, '土地'),
-      (Icons.account_balance, '投資・事業用'),
-      (Icons.handyman, 'リフォーム'),
+  Widget _buildCategoryGrid(BuildContext context) {
+    final cats = [
+      (Icons.apartment, AppLocalizations.of(context)!.catRent),
+      (Icons.location_city, AppLocalizations.of(context)!.catMansion),
+      (Icons.home, AppLocalizations.of(context)!.catDetached),
+      (Icons.landscape, AppLocalizations.of(context)!.catLand),
+      (Icons.account_balance, AppLocalizations.of(context)!.catInvestment),
+      (Icons.handyman, AppLocalizations.of(context)!.catReform),
     ];
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -104,19 +126,18 @@ class ReHomeScreen extends StatelessWidget {
           crossAxisSpacing: 8,
           mainAxisSpacing: 8,
           childAspectRatio: isWide ? 1.5 : 1.6,
-          children: cats
-              .map((c) => _CategoryCard(icon: c.$1, label: c.$2))
-              .toList(),
+          children:
+              cats.map((c) => _CategoryCard(icon: c.$1, label: c.$2)).toList(),
         );
       },
     );
   }
 
-  Widget _buildFeaturedSection() {
+  Widget _buildFeaturedSection(BuildContext context) {
     final items = [
-      (Imgs.re1, '新築・築浅特集'),
-      (Imgs.re2, '駅から徒歩5分以内'),
-      (Imgs.re3, 'ペット相談可物件'),
+      (Imgs.re1, AppLocalizations.of(context)!.reFeature1),
+      (Imgs.re2, AppLocalizations.of(context)!.reFeature2),
+      (Imgs.re3, AppLocalizations.of(context)!.reFeature3),
     ];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -124,10 +145,10 @@ class ReHomeScreen extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text('おすすめの特集',
-                style:
-                    GoogleFonts.notoSansJp(fontSize: 17, fontWeight: FontWeight.bold)),
-            Text('すべて見る',
+            Text(AppLocalizations.of(context)!.recommendedFeatures,
+                style: GoogleFonts.notoSansJp(
+                    fontSize: 17, fontWeight: FontWeight.bold)),
+            Text(AppLocalizations.of(context)!.seeAll,
                 style: GoogleFonts.plusJakartaSans(
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
@@ -157,7 +178,7 @@ class ReHomeScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(children: [
-              Text('新着物件',
+              Text(AppLocalizations.of(context)!.newProperties,
                   style: GoogleFonts.notoSansJp(
                       fontSize: 17, fontWeight: FontWeight.bold)),
               const SizedBox(width: 8),
@@ -166,14 +187,14 @@ class ReHomeScreen extends StatelessWidget {
                 decoration: BoxDecoration(
                     color: AppTheme.secondaryContainer,
                     borderRadius: BorderRadius.circular(10)),
-                child: Text('NEW',
+                child: Text(AppLocalizations.of(context)!.lblNew,
                     style: GoogleFonts.plusJakartaSans(
                         fontSize: 10,
                         fontWeight: FontWeight.bold,
                         color: AppTheme.onSecondaryContainer)),
               ),
             ]),
-            Text('条件を保存',
+            Text(AppLocalizations.of(context)!.saveConditions,
                 style: GoogleFonts.plusJakartaSans(
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
@@ -181,11 +202,13 @@ class ReHomeScreen extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 12),
-        ...reProperties.take(2).map((p) => Padding(
+        ...getReProperties(AppLocalizations.of(context)!).take(2).map((p) => Padding(
               padding: const EdgeInsets.only(bottom: 12),
               child: GestureDetector(
-                onTap: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (_) => RePropertyDetailScreen(property: p))),
+                onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => RePropertyDetailScreen(property: p))),
                 child: _RePropertyCard(property: p),
               ),
             )),
@@ -193,12 +216,12 @@ class ReHomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildAreaGuide() {
+  Widget _buildAreaGuide(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
           color: AppTheme.surfaceContainer,
           borderRadius: BorderRadius.circular(16)),
-      clipBehavior: Clip.antiAlias,
+      
       child: Stack(
         children: [
           Positioned(
@@ -206,18 +229,21 @@ class ReHomeScreen extends StatelessWidget {
             top: 0,
             bottom: 0,
             width: 160,
-            child: Image.network(Imgs.reArea, fit: BoxFit.cover,
-                color: Colors.white.withOpacity(0.6), colorBlendMode: BlendMode.lighten),
+            child: CachedNetworkImage(
+                imageUrl: Imgs.reArea,
+                fit: BoxFit.cover,
+                color: Colors.white.withOpacity(0.6),
+                colorBlendMode: BlendMode.lighten),
           ),
           Padding(
             padding: const EdgeInsets.all(20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('人気のエリアガイド',
+                Text(AppLocalizations.of(context)!.popularAreaGuide,
                     style: GoogleFonts.notoSansJp(fontWeight: FontWeight.bold)),
                 const SizedBox(height: 8),
-                Text('恵比寿・代官山・中目黒エリアの\n住みやすさと家賃相場を徹底解説。',
+                Text(AppLocalizations.of(context)!.reAreaTitle,
                     style: GoogleFonts.notoSansJp(
                         fontSize: 11,
                         color: AppTheme.onSurfaceVariant,
@@ -226,12 +252,13 @@ class ReHomeScreen extends StatelessWidget {
                 ElevatedButton(
                   onPressed: () {},
                   style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 10),
                     shape: const StadiumBorder(),
                     minimumSize: Size.zero,
                     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   ),
-                  child: Text('ガイドを読む',
+                  child: Text(AppLocalizations.of(context)!.readGuide,
                       style: GoogleFonts.notoSansJp(
                           fontSize: 12, fontWeight: FontWeight.bold)),
                 ),
@@ -253,9 +280,9 @@ class _SearchButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: AppTheme.surfaceContainerLow,
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: BorderRadius.circular(24),
       child: InkWell(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(24),
         onTap: () {},
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
@@ -286,14 +313,15 @@ class _CategoryCard extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
           color: AppTheme.surfaceContainerLowest,
-          borderRadius: BorderRadius.circular(12)),
+          borderRadius: BorderRadius.circular(24)),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(icon, color: AppTheme.primary, size: 22),
           const SizedBox(height: 4),
           Text(label,
-              style: GoogleFonts.notoSansJp(fontSize: 10, fontWeight: FontWeight.bold)),
+              style: GoogleFonts.notoSansJp(
+                  fontSize: 10, fontWeight: FontWeight.bold)),
         ],
       ),
     );
@@ -310,12 +338,14 @@ class _FeaturedCard extends StatelessWidget {
     return SizedBox(
       width: 172,
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(24),
         child: Stack(
           fit: StackFit.expand,
           children: [
-            Image.network(imageUrl, fit: BoxFit.cover,
-                errorBuilder: (_, __, ___) =>
+            CachedNetworkImage(
+                imageUrl: imageUrl,
+                fit: BoxFit.cover,
+                errorWidget: (_, __, ___) =>
                     Container(color: AppTheme.surfaceContainerHigh)),
             Container(
               decoration: BoxDecoration(
@@ -356,9 +386,11 @@ class _RePropertyCard extends StatelessWidget {
         decoration: BoxDecoration(
           color: AppTheme.surfaceContainerLowest,
           borderRadius: BorderRadius.circular(16),
-          boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 8)],
+          boxShadow: [
+            BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 8)
+          ],
         ),
-        clipBehavior: Clip.antiAlias,
+        
         child: Row(
           children: [
             SizedBox(
@@ -366,19 +398,22 @@ class _RePropertyCard extends StatelessWidget {
               child: Stack(
                 fit: StackFit.expand,
                 children: [
-                  Image.network(property.image, fit: BoxFit.cover,
-                      errorBuilder: (_, __, ___) =>
+                  CachedNetworkImage(
+                      imageUrl: property.image,
+                      fit: BoxFit.cover,
+                      errorWidget: (_, __, ___) =>
                           Container(color: AppTheme.surfaceContainerHigh)),
                   if (property.isNew)
                     Positioned(
                       top: 8,
                       left: 8,
                       child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 6, vertical: 2),
                         decoration: BoxDecoration(
                             color: Colors.white.withOpacity(0.9),
                             borderRadius: BorderRadius.circular(4)),
-                        child: Text('新着',
+                        child: Text(AppLocalizations.of(context)!.lblNew,
                             style: GoogleFonts.notoSansJp(
                                 fontSize: 10, fontWeight: FontWeight.bold)),
                       ),
@@ -428,7 +463,7 @@ class _RePropertyCard extends StatelessWidget {
                                     fontSize: 20,
                                     fontWeight: FontWeight.w900,
                                     color: AppTheme.primary)),
-                            Text('万円',
+                            Text(AppLocalizations.of(context)!.manYen,
                                 style: GoogleFonts.notoSansJp(
                                     fontSize: 10,
                                     fontWeight: FontWeight.bold,
@@ -437,10 +472,12 @@ class _RePropertyCard extends StatelessWidget {
                         ),
                         Text(property.layout,
                             style: GoogleFonts.notoSansJp(
-                                fontSize: 11, color: AppTheme.onSurfaceVariant)),
+                                fontSize: 11,
+                                color: AppTheme.onSurfaceVariant)),
                         Text(property.station,
                             style: GoogleFonts.notoSansJp(
-                                fontSize: 11, color: AppTheme.onSurfaceVariant)),
+                                fontSize: 11,
+                                color: AppTheme.onSurfaceVariant)),
                       ],
                     ),
                   ],

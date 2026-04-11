@@ -46,13 +46,15 @@ class NotificationScreen extends StatelessWidget {
         ),
         title: Text('お知らせ',
             style: GoogleFonts.notoSansJp(
-                fontWeight: FontWeight.bold, fontSize: 18, color: AppTheme.onSurface)),
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+                color: AppTheme.onSurface)),
       ),
       body: ListView.separated(
         padding: const EdgeInsets.symmetric(vertical: 8),
         itemCount: notifications.length,
-        separatorBuilder: (_, __) => Divider(
-            height: 1, color: AppTheme.outlineVariant.withOpacity(0.3)),
+        separatorBuilder: (_, __) =>
+            Divider(height: 1, color: AppTheme.outlineVariant.withOpacity(0.3)),
         itemBuilder: (_, i) {
           final n = notifications[i];
           return _NotificationTile(
