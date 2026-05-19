@@ -61,7 +61,7 @@ class MpMypageScreen extends StatelessWidget {
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Expanded(
+                            Flexible(
                               child: Text('TARO YAMADA',
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,

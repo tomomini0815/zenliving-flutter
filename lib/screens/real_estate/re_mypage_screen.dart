@@ -61,7 +61,7 @@ class ReMypageScreen extends StatelessWidget {
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Expanded(
+                            Flexible(
                               child: Text('佐藤 健二 様',
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,

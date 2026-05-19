@@ -95,6 +95,8 @@ class MpHomeScreen extends StatelessWidget {
         ),
         Expanded(
           child: Text(AppLocalizations.of(context)!.searchPlaceholder,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
               style: GoogleFonts.notoSansJp(
                   fontSize: 14, color: AppTheme.onSurfaceVariant)),
         ),
