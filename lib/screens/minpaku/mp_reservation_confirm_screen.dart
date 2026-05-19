@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../theme/app_theme.dart';
 import '../../state/zen_state.dart';
 import '../../data/sample_data.dart';
@@ -22,6 +23,7 @@ class _MpReservationConfirmScreenState
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final p = widget.property;
     return Scaffold(
       backgroundColor: AppTheme.surface,
@@ -33,7 +35,7 @@ class _MpReservationConfirmScreenState
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text('予約内容を確認する',
+        title: Text(l10n.mpReservationTitle,
             style: GoogleFonts.notoSansJp(fontWeight: FontWeight.bold)),
         actions: [
           IconButton(
@@ -88,7 +90,7 @@ class _MpReservationConfirmScreenState
                             const Icon(Icons.calendar_month,
                                 size: 14, color: AppTheme.onSurfaceVariant),
                             const SizedBox(width: 4),
-                            Text('2024年11月15日 - 11月18日',
+                            Text(l10n.mpDateRange,
                                 style: GoogleFonts.notoSansJp(
                                     fontSize: 11,
                                     color: AppTheme.onSurfaceVariant)),
@@ -98,7 +100,7 @@ class _MpReservationConfirmScreenState
                             const Icon(Icons.group,
                                 size: 14, color: AppTheme.onSurfaceVariant),
                             const SizedBox(width: 4),
-                            Text('ゲスト2名',
+                            Text(l10n.mpGuestCount,
                                 style: GoogleFonts.notoSansJp(
                                     fontSize: 11,
                                     color: AppTheme.onSurfaceVariant)),
@@ -109,21 +111,25 @@ class _MpReservationConfirmScreenState
               ]),
             ),
             const SizedBox(height: 24),
-            Text('ゲスト情報入力',
+            Text(l10n.mpGuestInfo,
                 style: GoogleFonts.notoSansJp(
                     fontSize: 16, fontWeight: FontWeight.bold)),
             const SizedBox(height: 12),
             Row(children: [
-              Expanded(child: _FormField(label: '姓（ローマ字）', hint: 'YAMADA')),
+              Expanded(
+                  child:
+                      _FormField(label: l10n.mpLastNameRoman, hint: 'YAMADA')),
               const SizedBox(width: 12),
-              Expanded(child: _FormField(label: '名（ローマ字）', hint: 'TARO')),
+              Expanded(
+                  child:
+                      _FormField(label: l10n.mpFirstNameRoman, hint: 'TARO')),
             ]),
             const SizedBox(height: 12),
-            _FormField(label: 'メールアドレス', hint: 'example@zenliving.jp'),
+            _FormField(label: l10n.mpEmailAddress, hint: 'example@zenliving.jp'),
             const SizedBox(height: 12),
-            _FormField(label: '電話番号', hint: '09012345678'),
+            _FormField(label: l10n.mpPhoneNumber, hint: '09012345678'),
             const SizedBox(height: 24),
-            Text('お支払い方法',
+            Text(l10n.mpPaymentMethod,
                 style: GoogleFonts.notoSansJp(
                     fontSize: 16, fontWeight: FontWeight.bold)),
             const SizedBox(height: 12),
@@ -131,8 +137,8 @@ class _MpReservationConfirmScreenState
               index: 0,
               selected: _payment,
               icon: Icons.credit_card,
-              title: 'クレジットカード',
-              subtitle: 'VISA, Mastercard, AMEX',
+              title: l10n.mpCreditCard,
+              subtitle: l10n.mpCreditCardSub,
               onTap: () => setState(() => _payment = 0),
             ),
             const SizedBox(height: 8),
@@ -140,8 +146,8 @@ class _MpReservationConfirmScreenState
               index: 1,
               selected: _payment,
               icon: Icons.account_balance,
-              title: '銀行振込',
-              subtitle: '振込手数料はお客様負担となります',
+              title: l10n.mpBankTransfer,
+              subtitle: l10n.mpBankTransferSub,
               onTap: () => setState(() => _payment = 1),
             ),
             if (_payment == 0) ...[
@@ -157,14 +163,14 @@ class _MpReservationConfirmScreenState
                   Row(children: [
                     const Icon(Icons.lock_outline, size: 16),
                     const SizedBox(width: 8),
-                    Text('カード情報を入力',
+                    Text(l10n.mpEnterCardInfo,
                         style: GoogleFonts.notoSansJp(
                             fontSize: 12, fontWeight: FontWeight.bold)),
                   ]),
                   const SizedBox(height: 12),
                   TextField(
                     decoration: InputDecoration(
-                      hintText: 'カード番号',
+                      hintText: l10n.mpCardNumber,
                       hintStyle: GoogleFonts.notoSansJp(
                           fontSize: 14, color: AppTheme.onSurfaceVariant),
                       filled: true,
@@ -180,7 +186,7 @@ class _MpReservationConfirmScreenState
                     Expanded(
                       child: TextField(
                         decoration: InputDecoration(
-                          hintText: '有効期限 (MM/YY)',
+                          hintText: l10n.mpExpiry,
                           hintStyle: GoogleFonts.notoSansJp(
                               fontSize: 12, color: AppTheme.onSurfaceVariant),
                           filled: true,
@@ -233,19 +239,19 @@ class _MpReservationConfirmScreenState
               borderRadius: BorderRadius.circular(12),
             ),
             child: Column(children: [
-              _PriceRow(label: '宿泊費 (3泊)', value: '¥124,500'),
+              _PriceRow(label: l10n.mpAccommodationFee, value: '${l10n.yen}124,500'),
               const SizedBox(height: 8),
-              _PriceRow(label: '清掃費', value: '¥8,000'),
+              _PriceRow(label: l10n.mpCleaningFee, value: '${l10n.yen}8,000'),
               const SizedBox(height: 8),
-              _PriceRow(label: 'サービス料', value: '¥15,200'),
+              _PriceRow(label: l10n.mpServiceFee, value: '${l10n.yen}15,200'),
               const Divider(height: 16),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('合計（税込）',
+                  Text(l10n.mpTotalWithTax,
                       style: GoogleFonts.notoSansJp(
                           fontSize: 13, fontWeight: FontWeight.bold)),
-                  Text('¥147,700',
+                  Text('${l10n.yen}147,700',
                       style: GoogleFonts.plusJakartaSans(
                           fontSize: 20,
                           fontWeight: FontWeight.w900,
@@ -263,10 +269,10 @@ class _MpReservationConfirmScreenState
                     'id': 'mp_${DateTime.now().millisecondsSinceEpoch}',
                     'type': 'minpaku',
                     'name': p?.name ?? '軽井沢の静寂に包まれるモダン和風邸宅',
-                    'price': '¥147,700', // Mock total price
+                    'price': '${l10n.yen}147,700', // Mock total price
                     'date': '2024-11-15T00:00:00.000',
                     'image': p?.image ?? Imgs.mpDetail,
-                    'details': '2024年11月15日 - 11月18日 / 2名',
+                    'details': '${l10n.mpDateRange} / ${l10n.mpGuestCount}',
                   });
                   Navigator.pushAndRemoveUntil(
                     context,
@@ -279,7 +285,7 @@ class _MpReservationConfirmScreenState
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16)),
                 ),
-                child: Text('予約を確定する',
+                child: Text(l10n.mpConfirmReservation,
                     style: GoogleFonts.notoSansJp(
                         fontSize: 16, fontWeight: FontWeight.bold)),
               ),
@@ -287,7 +293,7 @@ class _MpReservationConfirmScreenState
           ),
           const SizedBox(height: 8),
           Text(
-            '「予約を確定する」をクリックすることで、ZenLivingの利用規約およびキャンセルポリシーに同意したものとみなされます。',
+            l10n.mpReservationTerms,
             textAlign: TextAlign.center,
             style: GoogleFonts.notoSansJp(
                 fontSize: 9, color: AppTheme.onSurfaceVariant),

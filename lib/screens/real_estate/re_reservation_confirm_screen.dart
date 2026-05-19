@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../theme/app_theme.dart';
 import '../../state/zen_state.dart';
 import '../../data/sample_data.dart';
@@ -22,6 +23,7 @@ class _ReReservationConfirmScreenState
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: AppTheme.surface,
       appBar: AppBar(
@@ -32,7 +34,7 @@ class _ReReservationConfirmScreenState
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text('申し込み内容の確認',
+        title: Text(l10n.reConfirmTitle,
             style: GoogleFonts.notoSansJp(fontWeight: FontWeight.bold)),
       ),
       body: SingleChildScrollView(
@@ -63,7 +65,7 @@ class _ReReservationConfirmScreenState
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('賃貸マンション',
+                        Text(l10n.reRentalMansion,
                             style: GoogleFonts.notoSansJp(
                                 fontSize: 10,
                                 fontWeight: FontWeight.bold,
@@ -89,27 +91,27 @@ class _ReReservationConfirmScreenState
               ),
             ),
             const SizedBox(height: 24),
-            Text('申込者情報',
+            Text(l10n.reApplicantInfo,
                 style: GoogleFonts.notoSansJp(
                     fontSize: 16, fontWeight: FontWeight.bold)),
             const SizedBox(height: 12),
-            _buildFormField('氏名（漢字）', '山田 太郎'),
+            _buildFormField(l10n.reNameKanji, '山田 太郎'),
             const SizedBox(height: 12),
-            _buildFormField('氏名（ローマ字）', 'YAMADA TARO'),
+            _buildFormField(l10n.reNameRoman, 'YAMADA TARO'),
             const SizedBox(height: 12),
-            _buildFormField('メールアドレス', 'yamada@example.com'),
+            _buildFormField(l10n.reEmail, 'yamada@example.com'),
             const SizedBox(height: 12),
-            _buildFormField('電話番号', '090-1234-5678'),
+            _buildFormField(l10n.rePhone, '090-1234-5678'),
             const SizedBox(height: 24),
-            Text('お支払い方法',
+            Text(l10n.rePaymentMethod,
                 style: GoogleFonts.notoSansJp(
                     fontSize: 16, fontWeight: FontWeight.bold)),
             const SizedBox(height: 12),
             _buildPaymentOption(
-                0, Icons.credit_card, 'クレジットカード', 'VISA, Mastercard, AMEX'),
+                0, Icons.credit_card, l10n.reCreditCard, l10n.reCreditCardSub),
             const SizedBox(height: 8),
             _buildPaymentOption(
-                1, Icons.account_balance, '銀行振込', '振込手数料はお客様負担となります'),
+                1, Icons.account_balance, l10n.reBankTransfer, l10n.reBankTransferSub),
             const SizedBox(height: 100),
           ],
         ),
@@ -127,10 +129,10 @@ class _ReReservationConfirmScreenState
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('月額賃料（税込）',
+                Text(l10n.reMonthlyRentWithTax,
                     style: GoogleFonts.notoSansJp(
                         fontSize: 12, color: AppTheme.onSurfaceVariant)),
-                Text('${widget.property?.price ?? '18.5'}万円',
+                Text('${widget.property?.price ?? '18.5'}${l10n.manYen}',
                     style: GoogleFonts.plusJakartaSans(
                         fontSize: 20,
                         fontWeight: FontWeight.w900,
@@ -162,7 +164,7 @@ class _ReReservationConfirmScreenState
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16)),
                   ),
-                  child: Text('申し込みを確定する',
+                  child: Text(l10n.reConfirmSubmit,
                       style: GoogleFonts.notoSansJp(
                           fontSize: 16, fontWeight: FontWeight.bold)),
                 ),

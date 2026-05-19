@@ -257,7 +257,7 @@ class _MpListCard extends StatelessWidget {
                         fontSize: 18,
                         fontWeight: FontWeight.w900,
                         color: AppTheme.primary)),
-                Text(' / 泊',
+                Text(AppLocalizations.of(context)!.perNight,
                     style: GoogleFonts.notoSansJp(
                         fontSize: 10,
                         color: AppTheme.outline,

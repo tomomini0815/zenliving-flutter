@@ -13,6 +13,7 @@ class ReFavoritesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: AppTheme.surface,
       appBar: AppBar(
@@ -21,12 +22,12 @@ class ReFavoritesScreen extends StatelessWidget {
         backgroundColor: AppTheme.surface,
         elevation: 0,
         titleSpacing: 0,
-        title: Text('保存済み物件',
+        title: Text(l10n.savedProperties,
             style: GoogleFonts.notoSansJp(
                 fontWeight: FontWeight.bold, fontSize: 18)),
       ),
       body: Consumer<ZenState>(builder: (context, state, __) {
-        final favs = getReProperties(AppLocalizations.of(context)!).where((p) => state.isFavorite(p.id)).toList();
+        final favs = getReProperties(l10n).where((p) => state.isFavorite(p.id)).toList();
         if (favs.isEmpty) {
           return Center(
             child: Column(
@@ -35,13 +36,13 @@ class ReFavoritesScreen extends StatelessWidget {
                 const Icon(Icons.favorite_outline,
                     size: 64, color: AppTheme.outlineVariant),
                 const SizedBox(height: 16),
-                Text('保存済み物件はありません',
+                Text(l10n.noSavedProperties,
                     style: GoogleFonts.notoSansJp(
                         fontSize: 15,
                         color: AppTheme.onSurfaceVariant,
                         fontWeight: FontWeight.w500)),
                 const SizedBox(height: 8),
-                Text('気になる物件をお気に入りに追加しましょう',
+                Text(l10n.addFavoritesHint,
                     style: GoogleFonts.notoSansJp(
                         fontSize: 12, color: AppTheme.onSurfaceVariant)),
               ],
@@ -76,6 +77,7 @@ class _FavoriteCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       height: 116,
       decoration: BoxDecoration(
@@ -128,7 +130,7 @@ class _FavoriteCard extends StatelessWidget {
                                     fontSize: 18,
                                     fontWeight: FontWeight.w900,
                                     color: AppTheme.primary)),
-                            Text('万円',
+                            Text(l10n.manYen,
                                 style: GoogleFonts.notoSansJp(
                                     fontSize: 10,
                                     color: AppTheme.primary,

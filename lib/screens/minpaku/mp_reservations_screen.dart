@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../theme/app_theme.dart';
 import '../../state/zen_state.dart';
 import '../../data/sample_data.dart';
@@ -13,6 +14,7 @@ class MpReservationsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: AppTheme.surface,
       appBar: AppBar(
@@ -21,7 +23,7 @@ class MpReservationsScreen extends StatelessWidget {
         backgroundColor: AppTheme.surface,
         elevation: 0,
         titleSpacing: 0,
-        title: Text('予約済み',
+        title: Text(l10n.mpReservationsTitle,
             style: GoogleFonts.notoSansJp(
                 fontWeight: FontWeight.bold, fontSize: 18)),
         actions: [
@@ -42,7 +44,7 @@ class MpReservationsScreen extends StatelessWidget {
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               // Upcoming reservation card
-              Text('次回の滞在',
+              Text(l10n.mpUpcomingStay,
                   style: GoogleFonts.notoSansJp(
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
@@ -57,15 +59,15 @@ class MpReservationsScreen extends StatelessWidget {
                         name: res['name'],
                         dates: res['details'],
                         image: res['image'] ?? Imgs.mpReservation,
-                        status: '確定済み',
+                        status: l10n.mpConfirmed,
                       ),
                     )),
               ] else ...[
                 _ReservationCard(
-                  name: '鎌倉 隠れ家ヴィラ',
-                  dates: '2023年11月12日 - 11月14日 (2泊)',
+                  name: l10n.mpMypagePropertyName,
+                  dates: l10n.mpMypageDates,
                   image: Imgs.mpReservation,
-                  status: '確定済み',
+                  status: l10n.mpConfirmed,
                 ),
               ],
 
@@ -85,12 +87,12 @@ class MpReservationsScreen extends StatelessWidget {
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('新しい宿泊先を予約する',
+                          Text(l10n.mpNewReservation,
                               style: GoogleFonts.notoSansJp(
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold,
                                   color: AppTheme.primary)),
-                          Text('お好みの宿泊先を探しましょう',
+                          Text(l10n.mpNewReservationSub,
                               style: GoogleFonts.notoSansJp(
                                   fontSize: 11,
                                   color: AppTheme.onSurfaceVariant)),
@@ -100,7 +102,7 @@ class MpReservationsScreen extends StatelessWidget {
                 ]),
               ),
               const SizedBox(height: 28),
-              Text('過去の滞在',
+              Text(l10n.mpPastStays,
                   style: GoogleFonts.notoSansJp(
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
@@ -108,16 +110,16 @@ class MpReservationsScreen extends StatelessWidget {
                       letterSpacing: 1)),
               const SizedBox(height: 12),
               _PastStayCard(
-                name: '京都・東山の古民家',
-                dates: '2023年9月3日 - 9月5日',
-                price: '¥38,400',
+                name: l10n.mpAreaKyoto,
+                dates: '2023-09-03 - 2023-09-05',
+                price: '${l10n.yen}38,400',
                 image: Imgs.mpAreaKyoto,
               ),
               const SizedBox(height: 12),
               _PastStayCard(
-                name: '沖縄・恩納村オーシャンヴィラ',
-                dates: '2023年7月20日 - 7月23日',
-                price: '¥112,500',
+                name: l10n.mpAreaOkinawa,
+                dates: '2023-07-20 - 2023-07-23',
+                price: '${l10n.yen}112,500',
                 image: Imgs.mpAreaOkinawa,
               ),
               const SizedBox(height: 80),
@@ -144,6 +146,7 @@ class _ReservationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       decoration: BoxDecoration(
         color: AppTheme.surfaceContainerLowest,
@@ -207,7 +210,7 @@ class _ReservationCard extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(14)),
                 ),
-                child: Text('予約詳細を見る',
+                child: Text(l10n.mpViewDetails,
                     style: GoogleFonts.notoSansJp(
                         fontSize: 14, fontWeight: FontWeight.bold)),
               ),
@@ -233,6 +236,7 @@ class _PastStayCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       height: 96,
       decoration: BoxDecoration(
@@ -281,7 +285,7 @@ class _PastStayCard extends StatelessWidget {
                       decoration: BoxDecoration(
                           color: AppTheme.surfaceContainerLow,
                           borderRadius: BorderRadius.circular(10)),
-                      child: Text('レビューを書く',
+                      child: Text(l10n.mpWriteReview,
                           style: GoogleFonts.notoSansJp(
                               fontSize: 10,
                               fontWeight: FontWeight.bold,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../theme/app_theme.dart';
 import '../../state/zen_state.dart';
 import '../../data/sample_data.dart';
@@ -13,12 +14,13 @@ class MpPropertyDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final p = property ??
         MpProperty(
           id: 'mp_demo',
           name: '軽井沢の静寂に包まれるモダン和風邸宅',
           location: 'NAGANO / KARUIZAWA',
-          price: '¥45,000',
+          price: '45,000',
           rating: 4.97,
           tags: ['森の中', '完全貸切', '暖炉'],
           image: Imgs.mpDetail,
@@ -96,7 +98,7 @@ class MpPropertyDetailScreen extends StatelessWidget {
                       style: GoogleFonts.plusJakartaSans(
                           fontSize: 14, fontWeight: FontWeight.bold)),
                   const SizedBox(width: 8),
-                  Text('(レビュー42件)',
+                  Text(l10n.mpReviewCount,
                       style: GoogleFonts.notoSansJp(
                           fontSize: 12, color: AppTheme.onSurfaceVariant)),
                 ]),
@@ -128,25 +130,32 @@ class MpPropertyDetailScreen extends StatelessWidget {
                   child: Column(children: [
                     _InfoRow(
                         icon: Icons.calendar_month,
-                        label: 'チェックイン',
-                        value: '15:00以降'),
+                        label: l10n.mpDetailCheckin,
+                        value: l10n.mpDetailCheckinValue),
                     const Divider(height: 20),
                     _InfoRow(
-                        icon: Icons.logout, label: 'チェックアウト', value: '11:00まで'),
-                    const Divider(height: 20),
-                    _InfoRow(icon: Icons.group, label: '最大宿泊人数', value: '4名'),
+                        icon: Icons.logout,
+                        label: l10n.mpDetailCheckout,
+                        value: l10n.mpDetailCheckoutValue),
                     const Divider(height: 20),
                     _InfoRow(
-                        icon: Icons.smoking_rooms, label: '禁煙', value: '全館禁煙'),
+                        icon: Icons.group,
+                        label: l10n.mpDetailMaxGuests,
+                        value: l10n.mpDetailMaxGuestsValue),
+                    const Divider(height: 20),
+                    _InfoRow(
+                        icon: Icons.smoking_rooms,
+                        label: l10n.mpDetailSmoking,
+                        value: l10n.mpDetailSmokingValue),
                   ]),
                 ),
                 const SizedBox(height: 20),
-                Text('施設について',
+                Text(l10n.mpAboutFacility,
                     style: GoogleFonts.notoSansJp(
                         fontSize: 16, fontWeight: FontWeight.bold)),
                 const SizedBox(height: 12),
                 Text(
-                  '自然の静寂の中に宿る、こだわり抜いた空間。地元の職人が手掛けた木造建築と、モダンなデザインが融合した一棟貸しの宿です。敷地内には無農薬の野菜畑があり、収穫体験もお楽しみいただけます。',
+                  l10n.mpAboutFacilityDesc,
                   style: GoogleFonts.notoSansJp(
                       fontSize: 13,
                       color: AppTheme.onSurfaceVariant,
@@ -170,13 +179,13 @@ class MpPropertyDetailScreen extends StatelessWidget {
                       child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('安心のキャンセル保証',
+                            Text(l10n.mpCancelPolicy,
                                 style: GoogleFonts.notoSansJp(
                                     fontSize: 12,
                                     fontWeight: FontWeight.bold,
                                     color: AppTheme.secondary)),
                             const SizedBox(height: 2),
-                            Text('チェックインの48時間前までであれば、全額返金が可能です。',
+                            Text(l10n.mpCancelPolicyDesc,
                                 style: GoogleFonts.notoSansJp(
                                     fontSize: 11,
                                     color: AppTheme.onSurfaceVariant,
@@ -203,14 +212,25 @@ class MpPropertyDetailScreen extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('1泊あたり',
+              Text(l10n.mpPerNightLabel,
                   style: GoogleFonts.notoSansJp(
                       fontSize: 11, color: AppTheme.onSurfaceVariant)),
-              Text(p.price,
-                  style: GoogleFonts.plusJakartaSans(
-                      fontSize: 22,
-                      fontWeight: FontWeight.w900,
-                      color: AppTheme.primary)),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.baseline,
+                textBaseline: TextBaseline.alphabetic,
+                children: [
+                  Text(l10n.yen,
+                      style: GoogleFonts.plusJakartaSans(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: AppTheme.primary)),
+                  Text(p.price,
+                      style: GoogleFonts.plusJakartaSans(
+                          fontSize: 22,
+                          fontWeight: FontWeight.w900,
+                          color: AppTheme.primary)),
+                ],
+              ),
             ],
           ),
           const SizedBox(width: 16),
@@ -225,7 +245,7 @@ class MpPropertyDetailScreen extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16)),
               ),
-              child: Text('予約する',
+              child: Text(l10n.mpReserveButton,
                   style: GoogleFonts.notoSansJp(
                       fontSize: 15, fontWeight: FontWeight.bold)),
             ),

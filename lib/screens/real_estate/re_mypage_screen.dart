@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../theme/app_theme.dart';
 import '../../data/sample_data.dart';
-import '../entry_screen.dart';
-import '../common/notification_screen.dart';
+import 're_favorites_screen.dart';
 
 class ReMypageScreen extends StatelessWidget {
   const ReMypageScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: AppTheme.surface,
       appBar: AppBar(
@@ -19,163 +19,183 @@ class ReMypageScreen extends StatelessWidget {
         backgroundColor: AppTheme.surface,
         elevation: 0,
         titleSpacing: 0,
-        title: Row(mainAxisSize: MainAxisSize.min, children: [
-          const Icon(Icons.home_work, color: Color(0xFF1B5E20), size: 20),
-          const SizedBox(width: 8),
-          Text('ZenLiving',
-              style: GoogleFonts.plusJakartaSans(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: const Color(0xFF1B5E20))),
-        ]),
+        title: Text(l10n.navMyPage,
+            style: GoogleFonts.notoSansJp(
+                fontWeight: FontWeight.bold, fontSize: 18)),
         actions: [
           IconButton(
-            icon: const Icon(Icons.notifications_outlined,
+            icon: const Icon(Icons.settings_outlined,
                 color: AppTheme.onSurfaceVariant),
-            onPressed: () => Navigator.push(context,
-                MaterialPageRoute(builder: (_) => const NotificationScreen())),
+            onPressed: () {},
           ),
         ],
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            // Profile Card
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: AppTheme.surfaceContainerLowest,
-                borderRadius: BorderRadius.circular(16),
-                boxShadow: [
-                  BoxShadow(
-                      color: Colors.black.withOpacity(0.04), blurRadius: 16)
-                ],
-              ),
+            const SizedBox(height: 20),
+            // Profile Section
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
               child: Row(
                 children: [
-                  Stack(
-                    children: [
-                      ClipOval(
-                        child: CachedNetworkImage(
-                            imageUrl: Imgs.userAvatar,
-                            width: 64,
-                            height: 64,
-                            fit: BoxFit.cover,
-                            errorWidget: (_, __, ___) => Container(
-                                width: 64,
-                                height: 64,
-                                color: AppTheme.surfaceContainerHigh,
-                                child: const Icon(Icons.person))),
+                  Container(
+                    width: 72,
+                    height: 72,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: AppTheme.surfaceContainerHigh,
+                      image: const DecorationImage(
+                        image: NetworkImage(Imgs.userAvatar),
+                        fit: BoxFit.cover,
                       ),
-                      Positioned(
-                        bottom: 0,
-                        right: 0,
-                        child: Container(
-                          padding: const EdgeInsets.all(3),
-                          decoration: BoxDecoration(
-                            color: AppTheme.primary,
-                            shape: BoxShape.circle,
-                            border: Border.all(color: Colors.white, width: 1.5),
-                          ),
-                          child: const Icon(Icons.verified,
-                              size: 12, color: Colors.white),
-                        ),
-                      ),
-                    ],
+                      border: Border.all(
+                          color: AppTheme.primary.withOpacity(0.2), width: 2),
+                    ),
                   ),
-                  const SizedBox(width: 16),
+                  const SizedBox(width: 20),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('佐藤 健二 様',
-                            style: GoogleFonts.notoSansJp(
-                                fontSize: 18, fontWeight: FontWeight.bold)),
-                        const SizedBox(height: 6),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 3),
-                          decoration: BoxDecoration(
-                            color: AppTheme.primaryContainer,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Text('PREMIUM MEMBER',
-                              style: GoogleFonts.plusJakartaSans(
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.bold,
-                                  color: AppTheme.onPrimaryContainer)),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text('佐藤 健二 様',
+                                style: GoogleFonts.notoSansJp(
+                                    fontSize: 20, fontWeight: FontWeight.bold)),
+                            const SizedBox(width: 8),
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 8, vertical: 4),
+                              decoration: BoxDecoration(
+                                color: AppTheme.primaryContainer,
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  const Icon(Icons.star,
+                                      size: 12,
+                                      color: AppTheme.onPrimaryContainer),
+                                  const SizedBox(width: 4),
+                                  Text(l10n.reMypagePremiumMember,
+                                      style: GoogleFonts.plusJakartaSans(
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.bold,
+                                          color: AppTheme.onPrimaryContainer)),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
+                        const SizedBox(height: 4),
+                        Text('kenji.sato@example.com',
+                            style: GoogleFonts.plusJakartaSans(
+                                fontSize: 13,
+                                color: AppTheme.onSurfaceVariant)),
                       ],
                     ),
                   ),
-                  const Icon(Icons.chevron_right,
-                      color: AppTheme.outlineVariant),
                 ],
               ),
             ),
-            const SizedBox(height: 12),
-            // Stats
-            Row(
+            const SizedBox(height: 32),
+
+            // Quick Stats
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => const ReFavoritesScreen()));
+                      },
+                      child: _StatCard(
+                        icon: Icons.favorite,
+                        label: l10n.reMypageStatFavorites,
+                        value: '12',
+                        unit: l10n.reMypageStatUnit,
+                        iconColor: AppTheme.error,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: _StatCard(
+                      icon: Icons.history,
+                      label: l10n.reMypageStatRecent,
+                      value: '24',
+                      unit: l10n.reMypageStatUnit,
+                      iconColor: AppTheme.primary,
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: _StatCard(
+                      icon: Icons.bookmark,
+                      label: l10n.reMypageStatSaved,
+                      value: '3',
+                      unit: l10n.reMypageStatUnit,
+                      iconColor: AppTheme.secondary,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 40),
+
+            // Main Menu
+            _MenuSection(
+              title: l10n.reMypageActivitySection,
               children: [
-                Expanded(
-                    child: _StatCard(label: 'お気に入り', value: '12', unit: '件')),
-                const SizedBox(width: 8),
-                Expanded(
-                    child: _StatCard(label: '最近見た', value: '24', unit: '件')),
-                const SizedBox(width: 8),
-                Expanded(
-                    child: _StatCard(label: '保存条件', value: '5', unit: '件')),
+                _MenuItem(
+                  icon: Icons.chat_bubble_outline,
+                  title: l10n.reMypageInquiryHistory,
+                  subtitle: l10n.reMypageInquirySubtitle,
+                  hasNotification: true,
+                ),
+                _MenuItem(
+                  icon: Icons.notifications_none,
+                  title: l10n.reMypagePushNotif,
+                ),
               ],
             ),
-            const SizedBox(height: 20),
-            // Activity Section
-            _SectionLabel(label: 'ACTIVITY'),
-            const SizedBox(height: 8),
-            _MenuGroup(items: [
-              _MenuItem(
-                icon: Icons.chat_bubble_outline,
-                label: 'お問い合わせ履歴',
-                subtitle: '担当者からの返信があります',
-                badge: '2 NEW',
-              ),
-            ]),
-            const SizedBox(height: 16),
-            _SectionLabel(label: 'SETTINGS'),
-            const SizedBox(height: 8),
-            _MenuGroup(items: [
-              _MenuItem(
-                  icon: Icons.notifications_active_outlined, label: 'プッシュ通知設定'),
-              _MenuItem(icon: Icons.account_circle_outlined, label: 'アカウント情報'),
-              _MenuItem(icon: Icons.policy_outlined, label: 'プライバシーポリシー'),
-              _MenuItem(icon: Icons.help_outline, label: 'ヘルプ・お問い合わせ'),
-              _MenuItem(
-                icon: Icons.logout,
-                label: 'ログアウト',
-                isDestructive: true,
-                onTap: () {
-                  Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(builder: (_) => const EntryScreen()),
-                    (route) => false,
-                  );
-                },
-              ),
-            ]),
             const SizedBox(height: 24),
-            Opacity(
-              opacity: 0.25,
-              child: Column(children: [
-                Text('ZENLIVING APP',
-                    style: GoogleFonts.plusJakartaSans(
-                        fontSize: 10,
-                        letterSpacing: 2,
-                        fontWeight: FontWeight.bold)),
-                Text('VERSION 5.0.0',
-                    style: GoogleFonts.plusJakartaSans(
-                        fontSize: 10, letterSpacing: 1)),
-              ]),
+            _MenuSection(
+              title: l10n.reMypageSettingsSection,
+              children: [
+                _MenuItem(
+                  icon: Icons.person_outline,
+                  title: l10n.reMypageAccountInfo,
+                ),
+                _MenuItem(
+                  icon: Icons.shield_outlined,
+                  title: l10n.reMypagePrivacy,
+                ),
+                _MenuItem(
+                  icon: Icons.help_outline,
+                  title: l10n.reMypageHelp,
+                ),
+                _MenuItem(
+                  icon: Icons.logout,
+                  title: l10n.reMypageLogout,
+                  textColor: AppTheme.error,
+                  showArrow: false,
+                ),
+              ],
             ),
-            const SizedBox(height: 80),
+            const SizedBox(height: 40),
+            Text(
+              'ZenLiving App v1.0.0',
+              style: GoogleFonts.plusJakartaSans(
+                  fontSize: 12, color: AppTheme.outline),
+            ),
+            const SizedBox(height: 40),
           ],
         ),
       ),
@@ -184,146 +204,184 @@ class ReMypageScreen extends StatelessWidget {
 }
 
 class _StatCard extends StatelessWidget {
+  final IconData icon;
   final String label;
   final String value;
   final String unit;
-  const _StatCard(
-      {required this.label, required this.value, required this.unit});
+  final Color iconColor;
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 14),
-      decoration: BoxDecoration(
-          color: AppTheme.surfaceContainerLowest,
-          borderRadius: BorderRadius.circular(12)),
-      child: Column(children: [
-        Text(label,
-            style: GoogleFonts.notoSansJp(
-                fontSize: 10, color: AppTheme.onSurfaceVariant)),
-        const SizedBox(height: 4),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.baseline,
-          textBaseline: TextBaseline.alphabetic,
-          children: [
-            Text(value,
-                style: GoogleFonts.plusJakartaSans(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w800,
-                    color: AppTheme.primary)),
-            Text(unit,
-                style: GoogleFonts.notoSansJp(
-                    fontSize: 10, color: AppTheme.onSurfaceVariant)),
-          ],
-        ),
-      ]),
-    );
-  }
-}
-
-class _SectionLabel extends StatelessWidget {
-  final String label;
-  const _SectionLabel({required this.label});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 4),
-      child: Text(label,
-          style: GoogleFonts.plusJakartaSans(
-              fontSize: 10,
-              fontWeight: FontWeight.bold,
-              letterSpacing: 2,
-              color: AppTheme.onSurfaceVariant)),
-    );
-  }
-}
-
-class _MenuItem {
-  final IconData icon;
-  final String label;
-  final String? subtitle;
-  final String? badge;
-  final bool isDestructive;
-  final VoidCallback? onTap;
-
-  const _MenuItem({
+  const _StatCard({
     required this.icon,
     required this.label,
-    this.subtitle,
-    this.badge,
-    this.isDestructive = false,
-    this.onTap,
+    required this.value,
+    required this.unit,
+    required this.iconColor,
   });
-}
-
-class _MenuGroup extends StatelessWidget {
-  final List<_MenuItem> items;
-  const _MenuGroup({required this.items});
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
       decoration: BoxDecoration(
         color: AppTheme.surfaceContainerLowest,
         borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.03),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
       child: Column(
-        children: items.asMap().entries.map((e) {
-          final i = e.key;
-          final item = e.value;
-          return Column(
+        children: [
+          Icon(icon, color: iconColor, size: 24),
+          const SizedBox(height: 12),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.baseline,
+            textBaseline: TextBaseline.alphabetic,
             children: [
-              if (i > 0)
-                Divider(
-                    height: 1,
-                    indent: 54,
-                    color: AppTheme.outlineVariant.withOpacity(0.3)),
-              ListTile(
-                leading: Icon(item.icon,
-                    color:
-                        item.isDestructive ? AppTheme.error : AppTheme.primary,
-                    size: 22),
-                title: Text(item.label,
-                    style: GoogleFonts.notoSansJp(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                        color: item.isDestructive
-                            ? AppTheme.error
-                            : AppTheme.onSurface)),
-                subtitle: item.subtitle != null
-                    ? Text(item.subtitle!,
-                        style: GoogleFonts.notoSansJp(
-                            fontSize: 11, color: AppTheme.onSurfaceVariant))
-                    : null,
-                trailing: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    if (item.badge != null)
-                      Container(
-                        margin: const EdgeInsets.only(right: 8),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 2),
-                        decoration: BoxDecoration(
-                            color: AppTheme.secondaryContainer,
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Text(item.badge!,
-                            style: GoogleFonts.plusJakartaSans(
-                                fontSize: 10,
-                                fontWeight: FontWeight.bold,
-                                color: AppTheme.onSecondaryContainer)),
-                      ),
-                    Icon(Icons.chevron_right,
-                        color: AppTheme.outlineVariant.withOpacity(0.7),
-                        size: 20),
-                  ],
-                ),
-                onTap: item.onTap ?? () {},
+              Text(value,
+                  style: GoogleFonts.plusJakartaSans(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: AppTheme.onSurface)),
+              const SizedBox(width: 2),
+              Text(unit,
+                  style: GoogleFonts.notoSansJp(
+                      fontSize: 10, color: AppTheme.onSurfaceVariant)),
+            ],
+          ),
+          const SizedBox(height: 4),
+          Text(label,
+              style: GoogleFonts.notoSansJp(
+                  fontSize: 11, color: AppTheme.onSurfaceVariant)),
+        ],
+      ),
+    );
+  }
+}
+
+class _MenuSection extends StatelessWidget {
+  final String title;
+  final List<Widget> children;
+
+  const _MenuSection({required this.title, required this.children});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+          child: Text(title,
+              style: GoogleFonts.plusJakartaSans(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 1.2,
+                  color: AppTheme.outline)),
+        ),
+        Container(
+          margin: const EdgeInsets.symmetric(horizontal: 16),
+          decoration: BoxDecoration(
+            color: AppTheme.surfaceContainerLowest,
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.02),
+                blurRadius: 10,
+                offset: const Offset(0, 4),
               ),
             ],
-          );
-        }).toList(),
+          ),
+          child: Column(
+            children: [
+              for (int i = 0; i < children.length; i++) ...[
+                children[i],
+                if (i < children.length - 1)
+                  const Divider(height: 1, indent: 56, endIndent: 16),
+              ],
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _MenuItem extends StatelessWidget {
+  final IconData icon;
+  final String title;
+  final String? subtitle;
+  final bool hasNotification;
+  final Color? textColor;
+  final bool showArrow;
+
+  const _MenuItem({
+    required this.icon,
+    required this.title,
+    this.subtitle,
+    this.hasNotification = false,
+    this.textColor,
+    this.showArrow = true,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {},
+      borderRadius: BorderRadius.circular(20),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: textColor != null
+                    ? textColor!.withOpacity(0.1)
+                    : AppTheme.surfaceContainerLow,
+                shape: BoxShape.circle,
+              ),
+              child: Icon(icon,
+                  size: 20, color: textColor ?? AppTheme.onSurfaceVariant),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(title,
+                      style: GoogleFonts.notoSansJp(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500,
+                          color: textColor ?? AppTheme.onSurface)),
+                  if (subtitle != null) ...[
+                    const SizedBox(height: 2),
+                    Text(subtitle!,
+                        style: GoogleFonts.notoSansJp(
+                            fontSize: 12, color: AppTheme.primary)),
+                  ],
+                ],
+              ),
+            ),
+            if (hasNotification)
+              Container(
+                margin: const EdgeInsets.only(right: 12),
+                width: 8,
+                height: 8,
+                decoration: const BoxDecoration(
+                  color: AppTheme.error,
+                  shape: BoxShape.circle,
+                ),
+              ),
+            if (showArrow)
+              const Icon(Icons.chevron_right,
+                  color: AppTheme.outlineVariant, size: 20),
+          ],
+        ),
       ),
     );
   }

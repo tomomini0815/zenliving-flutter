@@ -13,6 +13,7 @@ class MpFavoritesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: AppTheme.surface,
       appBar: AppBar(
@@ -21,12 +22,12 @@ class MpFavoritesScreen extends StatelessWidget {
         backgroundColor: AppTheme.surface,
         elevation: 0,
         titleSpacing: 0,
-        title: Text('お気に入り',
+        title: Text(l10n.mpFavoritesTitle,
             style: GoogleFonts.notoSansJp(
                 fontWeight: FontWeight.bold, fontSize: 18)),
       ),
       body: Consumer<ZenState>(builder: (context, state, __) {
-        final favs = getMpProperties(AppLocalizations.of(context)!).where((p) => state.isFavorite(p.id)).toList();
+        final favs = getMpProperties(l10n).where((p) => state.isFavorite(p.id)).toList();
         if (favs.isEmpty) {
           return Center(
             child:
@@ -34,13 +35,13 @@ class MpFavoritesScreen extends StatelessWidget {
               const Icon(Icons.favorite_outline,
                   size: 64, color: AppTheme.outlineVariant),
               const SizedBox(height: 16),
-              Text('お気に入りはまだありません',
+              Text(l10n.noSavedStays,
                   style: GoogleFonts.notoSansJp(
                       fontSize: 15,
                       color: AppTheme.onSurfaceVariant,
                       fontWeight: FontWeight.w500)),
               const SizedBox(height: 8),
-              Text('気に入った宿泊先をハートで保存しましょう',
+              Text(l10n.addStayFavoritesHint,
                   style: GoogleFonts.notoSansJp(
                       fontSize: 12, color: AppTheme.onSurfaceVariant)),
             ]),
@@ -76,6 +77,7 @@ class _FavCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       decoration: BoxDecoration(
         color: AppTheme.surfaceContainerLowest,
@@ -149,7 +151,7 @@ class _FavCard extends StatelessWidget {
                         fontSize: 20,
                         fontWeight: FontWeight.w900,
                         color: AppTheme.primary)),
-                Text(' / 泊',
+                Text(l10n.mpPerNightLabel,
                     style: GoogleFonts.notoSansJp(
                         fontSize: 11,
                         color: AppTheme.outline,

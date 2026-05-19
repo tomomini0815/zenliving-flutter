@@ -106,7 +106,7 @@ class _ReSearchScreenState extends State<ReSearchScreen> {
           Expanded(
             child: filteredProperties.isEmpty
                 ? Center(
-                    child: Text('該当する物件が見つかりませんでした',
+                    child: Text(AppLocalizations.of(context)!.noPropertiesFound,
                         style: GoogleFonts.notoSansJp(
                             color: AppTheme.onSurfaceVariant)))
                 : ListView.separated(
@@ -199,7 +199,7 @@ class _SearchResultCard extends StatelessWidget {
                                       fontSize: 18,
                                       fontWeight: FontWeight.w900,
                                       color: AppTheme.primary)),
-                              Text('万円',
+                              Text(AppLocalizations.of(context)!.manYen,
                                   style: GoogleFonts.notoSansJp(
                                       fontSize: 10,
                                       color: AppTheme.primary,

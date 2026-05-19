@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../theme/app_theme.dart';
 import '../../state/zen_state.dart';
 import '../../data/sample_data.dart';
@@ -13,6 +14,7 @@ class RePropertyDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final p = property ??
         ReProperty(
           id: 're_demo',
@@ -85,7 +87,7 @@ class RePropertyDetailScreen extends StatelessWidget {
                     decoration: BoxDecoration(
                         color: AppTheme.primaryContainer,
                         borderRadius: BorderRadius.circular(8)),
-                    child: Text('新着物件',
+                    child: Text(l10n.reNewProperty,
                         style: GoogleFonts.notoSansJp(
                             fontSize: 11,
                             fontWeight: FontWeight.bold,
@@ -104,7 +106,7 @@ class RePropertyDetailScreen extends StatelessWidget {
                             fontSize: 32,
                             fontWeight: FontWeight.w900,
                             color: AppTheme.primary)),
-                    Text('万円 / 月',
+                    Text('${l10n.manYen} / ${l10n.reMonthlyRent}',
                         style: GoogleFonts.notoSansJp(
                             fontSize: 14,
                             color: AppTheme.primary,
@@ -121,30 +123,33 @@ class RePropertyDetailScreen extends StatelessWidget {
                     children: [
                       _InfoRow(
                           icon: Icons.grid_view,
-                          label: '間取り・広さ',
+                          label: l10n.reFloorArea,
                           value: p.layout),
                       const Divider(height: 20),
                       _InfoRow(
                           icon: Icons.directions_walk,
-                          label: '最寄り駅',
+                          label: l10n.reNearestStation,
                           value: p.station),
                       const Divider(height: 20),
                       _InfoRow(
                           icon: Icons.calendar_month,
-                          label: '築年数',
-                          value: '築3年（2021年竣工）'),
+                          label: l10n.reBuildingAge,
+                          value: l10n.reBuildingAgeValue),
                       const Divider(height: 20),
-                      _InfoRow(icon: Icons.pets, label: 'ペット', value: '相談可'),
+                      _InfoRow(
+                          icon: Icons.pets,
+                          label: l10n.rePetPolicy,
+                          value: l10n.rePetPolicyValue),
                     ],
                   ),
                 ),
                 const SizedBox(height: 24),
-                Text('物件について',
+                Text(l10n.reAboutProperty,
                     style: GoogleFonts.notoSansJp(
                         fontSize: 16, fontWeight: FontWeight.bold)),
                 const SizedBox(height: 12),
                 Text(
-                  'この物件は都心の利便性と静かな住環境を両立させた、こだわりの設計が施されたレジデンスです。天井高2.5mの開放感あるリビング、大型の窓から差し込む自然光が心地よい空間を演出します。',
+                  l10n.reAboutPropertyDesc,
                   style: GoogleFonts.notoSansJp(
                       fontSize: 13,
                       color: AppTheme.onSurfaceVariant,
@@ -169,7 +174,7 @@ class RePropertyDetailScreen extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('月額賃料',
+                Text(l10n.reMonthlyRent,
                     style: GoogleFonts.notoSansJp(
                         fontSize: 11, color: AppTheme.onSurfaceVariant)),
                 Row(
@@ -181,7 +186,7 @@ class RePropertyDetailScreen extends StatelessWidget {
                             fontSize: 22,
                             fontWeight: FontWeight.w900,
                             color: AppTheme.primary)),
-                    Text('万円',
+                    Text(l10n.manYen,
                         style: GoogleFonts.notoSansJp(
                             fontSize: 11,
                             color: AppTheme.primary,
@@ -203,7 +208,7 @@ class RePropertyDetailScreen extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16)),
                 ),
-                child: Text('内見・申し込む',
+                child: Text(l10n.reInquireAndApply,
                     style: GoogleFonts.notoSansJp(
                         fontSize: 15, fontWeight: FontWeight.bold)),
               ),
