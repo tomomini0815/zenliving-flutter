@@ -61,13 +61,17 @@ class MpMypageScreen extends StatelessWidget {
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Text('TARO YAMADA',
-                                style: GoogleFonts.plusJakartaSans(
-                                    fontSize: 20, fontWeight: FontWeight.bold)),
-                            const SizedBox(width: 8),
+                            Expanded(
+                              child: Text('TARO YAMADA',
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: GoogleFonts.plusJakartaSans(
+                                      fontSize: 18, fontWeight: FontWeight.bold)),
+                            ),
+                            const SizedBox(width: 6),
                             Container(
                               padding: const EdgeInsets.symmetric(
-                                  horizontal: 8, vertical: 4),
+                                  horizontal: 6, vertical: 4),
                               decoration: BoxDecoration(
                                 color: AppTheme.secondaryContainer,
                                 borderRadius: BorderRadius.circular(20),
@@ -81,7 +85,7 @@ class MpMypageScreen extends StatelessWidget {
                                   const SizedBox(width: 4),
                                   Text(l10n.mpMypageVerifiedMember,
                                       style: GoogleFonts.plusJakartaSans(
-                                          fontSize: 10,
+                                          fontSize: 9,
                                           fontWeight: FontWeight.bold,
                                           color:
                                               AppTheme.onSecondaryContainer)),

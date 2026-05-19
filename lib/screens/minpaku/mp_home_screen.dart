@@ -478,7 +478,7 @@ class _MpPropertyCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(property.name,
-                    maxLines: 2,
+                    maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: GoogleFonts.notoSansJp(
                         fontSize: 13, fontWeight: FontWeight.bold)),

@@ -81,7 +81,7 @@ class _MpReservationConfirmScreenState
                                   color: AppTheme.onSurfaceVariant)),
                           const SizedBox(height: 4),
                           Text(p?.name ?? '軽井沢の静寂に包まれるモダン和風邸宅',
-                              maxLines: 2,
+                              maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: GoogleFonts.notoSansJp(
                                   fontSize: 14, fontWeight: FontWeight.bold)),

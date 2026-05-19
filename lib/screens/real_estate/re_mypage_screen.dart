@@ -61,13 +61,17 @@ class ReMypageScreen extends StatelessWidget {
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Text('佐藤 健二 様',
-                                style: GoogleFonts.notoSansJp(
-                                    fontSize: 20, fontWeight: FontWeight.bold)),
-                            const SizedBox(width: 8),
+                            Expanded(
+                              child: Text('佐藤 健二 様',
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: GoogleFonts.notoSansJp(
+                                      fontSize: 18, fontWeight: FontWeight.bold)),
+                            ),
+                            const SizedBox(width: 6),
                             Container(
                               padding: const EdgeInsets.symmetric(
-                                  horizontal: 8, vertical: 4),
+                                  horizontal: 6, vertical: 4),
                               decoration: BoxDecoration(
                                 color: AppTheme.primaryContainer,
                                 borderRadius: BorderRadius.circular(20),
@@ -81,7 +85,7 @@ class ReMypageScreen extends StatelessWidget {
                                   const SizedBox(width: 4),
                                   Text(l10n.reMypagePremiumMember,
                                       style: GoogleFonts.plusJakartaSans(
-                                          fontSize: 10,
+                                          fontSize: 9,
                                           fontWeight: FontWeight.bold,
                                           color: AppTheme.onPrimaryContainer)),
                                 ],
