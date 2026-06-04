@@ -76,7 +76,7 @@ class _MpSearchScreenState extends State<MpSearchScreen> {
           child: Container(
             decoration: BoxDecoration(
               color: AppTheme.surfaceContainerHighest,
-              borderRadius: BorderRadius.circular(50),
+              borderRadius: BorderRadius.circular(14),
             ),
             child: Row(children: [
               const Padding(

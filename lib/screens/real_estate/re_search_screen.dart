@@ -62,7 +62,7 @@ class _ReSearchScreenState extends State<ReSearchScreen> {
                         child: Container(
               decoration: BoxDecoration(
                 color: AppTheme.surfaceContainerHighest,
-                borderRadius: BorderRadius.circular(50),
+                borderRadius: BorderRadius.circular(14),
               ),
               child: Row(children: [
                 const Padding(
@@ -87,7 +87,7 @@ class _ReSearchScreenState extends State<ReSearchScreen> {
                   margin: const EdgeInsets.all(6),
                   padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
                   decoration: BoxDecoration(
-                      color: AppTheme.primary, borderRadius: BorderRadius.circular(50)),
+                      color: AppTheme.primary, borderRadius: BorderRadius.circular(10)),
                   child: Row(
                     children: [
                       const Icon(Icons.tune, color: Colors.white, size: 16),
