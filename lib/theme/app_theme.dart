@@ -14,12 +14,12 @@ class AppTheme {
   static const Color secondaryContainer = Color(0xFFFF9800);
   static const Color onSecondaryContainer = Color(0xFF653900);
 
-  static const Color surface = Color(0xFFFAFAF5);
+  static const Color surface = Color(0xFFF7F6F0);
   static const Color surfaceContainerLowest = Colors.white;
-  static const Color surfaceContainerLow = Color(0xFFF4F4EF);
-  static const Color surfaceContainer = Color(0xFFEEEEE9);
-  static const Color surfaceContainerHigh = Color(0xFFE8E8E3);
-  static const Color surfaceContainerHighest = Color(0xFFE3E3DE);
+  static const Color surfaceContainerLow = Color(0xFFF1F0E8);
+  static const Color surfaceContainer = Color(0xFFEAE9E0);
+  static const Color surfaceContainerHigh = Color(0xFFE3E2D8);
+  static const Color surfaceContainerHighest = Color(0xFFDDDCD0);
 
   static const Color onSurface = Color(0xFF1A1C19);
   static const Color onSurfaceVariant = Color(0xFF40493D);
