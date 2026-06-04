@@ -89347,7 +89347,7 @@ s=A.a0(13,B.j.m()>>>16&255,B.j.m()>>>8&255,B.j.m()&255)
 r=t.p
 q=A.aG(A.a([B.qc,B.cK,A.N("ZenLiving",o,o,o,A.bN().$3$color$fontSize$fontWeight(B.fm,18,B.o),o,o)],r),B.r,B.m,B.bf,o)
 q=A.al2(A.a([A.fH(o,o,o,B.ik,o,o,new A.aho(a),o,o,o,o)],r),!1,m,!0,0,o,l,n,!0,0,s,q,o)
-s=A.aO(24)
+s=A.aO(14)
 n=A.a([new A.ci(0,B.b1,A.a0(10,B.j.m()>>>16&255,B.j.m()>>>8&255,B.j.m()&255),B.f,16)],t.E)
 l=t.J
 return A.eZ(o,B.Z,A.a5e(A.a([q,new A.nc(B.bX,A.Rq(A.Rl(A.a([B.bg,A.aw(o,A.b0(A.a([new A.FX(B.N_,A.ax(a,B.x,l).gwn(),o),B.bg,new A.FX(B.MS,A.ax(a,B.x,l).gwo(),o)],r),B.r,B.m,B.l),B.b9,o,o,new A.aD(B.e,o,o,s,n,o,B.C),o,o,o,B.cY,o,o,o),B.dh,p.a5F(a),B.hi,p.a5H(a),B.hi,p.a5O(a),B.hi,p.a5E(a),B.eY],r),!0,!0,!0)),o)],r)),o)},
@@ -89409,7 +89409,7 @@ $0(){},
 $S:0}
 A.FX.prototype={
 J(a){var s=null
-return A.iD(B.a8,A.aO(24),A.tb(!1,A.aO(24),!0,new A.bg(B.l5,A.aG(A.a([A.e2(this.c,B.D,s,20),B.dg,A.N(this.d,s,s,s,A.W().$3$color$fontSize$fontWeight(B.z,14,B.a1),s,s)],t.p),B.r,B.m,B.l,s),s),s,!0,s,s,s,s,s,s,s,s,s,new A.avk(),s,s,s,s,s),B.p,B.fq,0,s,s,s,s,s,B.db)}}
+return A.iD(B.a8,A.aO(14),A.tb(!1,A.aO(14),!0,new A.bg(B.l5,A.aG(A.a([A.e2(this.c,B.D,s,20),B.dg,A.N(this.d,s,s,s,A.W().$3$color$fontSize$fontWeight(B.z,14,B.a1),s,s)],t.p),B.r,B.m,B.l,s),s),s,!0,s,s,s,s,s,s,s,s,s,new A.avk(),s,s,s,s,s),B.p,B.fq,0,s,s,s,s,s,B.db)}}
 A.avk.prototype={
 $0(){},
 $S:0}
