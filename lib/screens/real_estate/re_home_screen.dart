@@ -279,7 +279,7 @@ class _SearchButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: AppTheme.surfaceContainerLow,
+      color: AppTheme.surfaceContainerHighest,
       borderRadius: BorderRadius.circular(24),
       child: InkWell(
         borderRadius: BorderRadius.circular(24),
